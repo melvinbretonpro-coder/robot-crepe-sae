@@ -1595,6 +1595,7 @@ button.card {
 .cout__slider {
     flex: 1;
     -webkit-appearance: none;
+    appearance: none;
     height: 8px;
     background: var(--color-bg-secondary);
     border-radius: 4px;
@@ -1608,6 +1609,16 @@ button.card {
     width: 24px;
     height: 24px;
     background: var(--color-accent);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform var(--transition-fast);
+}
+
+.cout__slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: var(--color-accent);
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     transition: transform var(--transition-fast);

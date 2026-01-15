@@ -69,7 +69,7 @@ function initCostSimulator() {
         let quantity = parseInt(source.value);
 
         // Validation limites
-        if (quantity < 1) quantity = 1;
+        if (isNaN(quantity) || quantity < 1) quantity = 1;
         if (quantity > 10000) quantity = 10000;
 
         // Synchro des inputs
