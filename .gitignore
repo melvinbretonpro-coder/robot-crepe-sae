@@ -1,0 +1,8 @@
+
+# Fichiers système
+.DS_Store
+
+# Fichiers de documentation interne ou sources lourdes non utilisées
+PRD.md
+Projet_Robot_CREPE_SAE3.2.zip
+presentation.pdf

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Projet SAÉ 3.2 - Robot CRÊPE - Conception mécanique & approche CPD - BUT GMP IUT Rennes">
+    <title>Projet SAÉ 3.2 – Robot CRÊPE | BUT GMP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         NAVIGATION
+    ═══════════════════════════════════════════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar__container">
+            <a href="#" class="navbar__logo">Robot CRÊPE</a>
+            <ul class="navbar__menu">
+                <li><a href="#presentation" class="navbar__link">Présentation</a></li>
+                <li><a href="#livrables" class="navbar__link">Livrables</a></li>
+                <li><a href="#equipe" class="navbar__link">Équipe</a></li>
+                <li><a href="#bilan" class="navbar__link">Bilan</a></li>
+                <li><a href="#contact" class="navbar__link">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Changer de thème">
+                        <!-- Soleil (affiché en thème sombre) -->
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <!-- Lune (affichée en thème clair) -->
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- ═══════════════════════════════════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════════════════════════════════ -->
+    <header class="hero">
+        <div class="hero__background">
+            <div class="hero__gradient"></div>
+            <div class="hero__grid"></div>
+        </div>
+        <div class="hero__content">
+            <span class="hero__badge">BUT GMP – IUT Rennes</span>
+            <h1 class="hero__title">
+                Projet SAÉ 3.2
+                <span class="hero__title-highlight">Robot CRÊPE</span>
+            </h1>
+            <p class="hero__subtitle">Conception mécanique & fabrication</p>
+            <a href="#livrables" class="hero__cta">
+                <span>Accéder aux livrables</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                </svg>
+            </a>
+        </div>
+        <div class="hero__scroll-indicator">
+            <span>Découvrir</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14" />
+                <path d="m19 12-7 7-7-7" />
+            </svg>
+        </div>
+    </header>
+
+    <main>
+        <!-- ═══════════════════════════════════════════════════════════════════
+             PRÉSENTATION DU PROJET
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section presentation" id="presentation">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">À propos</span>
+                    <h2 class="section__title">Présentation du projet</h2>
+                </div>
+                <div class="presentation__grid">
+                    <div class="presentation__content">
+                        <p class="presentation__text">
+                            Le <strong>Robot CRÊPE</strong> est un projet de conception mécanique développé dans le
+                            cadre de la SAÉ 3.2 du BUT Génie Mécanique et Productique. Son objectif est de répondre à un
+                            cahier des charges technique tout en intégrant une démarche d'éco-conception.
+                        </p>
+                        <p class="presentation__text">
+                            Ce projet met en œuvre une approche complète allant de la <strong>conception</strong> à la
+                            <strong>fabrication</strong>, en passant par des phases de prototypage et de tests
+                            afin d'aboutir à un robot fonctionnel.
+                        </p>
+                    </div>
+                    <div class="presentation__steps">
+                        <div class="step">
+                            <div class="step__number">01</div>
+                            <div class="step__content">
+                                <h3 class="step__title">Conception</h3>
+                                <p class="step__text">Modélisation CAO et dimensionnement mécanique</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step__number">02</div>
+                            <div class="step__content">
+                                <h3 class="step__title">Fabrication</h3>
+                                <p class="step__text">Choix des procédés et réalisation des pièces</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step__number">03</div>
+                            <div class="step__content">
+                                <h3 class="step__title">Tests & Validation</h3>
+                                <p class="step__text">Vérification des performances et ajustements</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION LIVRABLES
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section livrables" id="livrables">
+            <div class="container">
+                <div class="section__header section__header--center">
+                    <span class="section__label">Ressources</span>
+                    <h2 class="section__title">Livrables du projet</h2>
+                    <p class="section__description">Accédez à l'ensemble des documents et ressources du projet Robot
+                        CRÊPE</p>
+                </div>
+                <div class="livrables__grid">
+                    <!-- Card: Rapport technique (ouvre une modale PDF) -->
+                    <button type="button" class="card" data-modal="pdf-modal">
+                        <div class="card__icon card__icon--blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                        </div>
+                        <h3 class="card__title">Rapport technique</h3>
+                        <p class="card__description">Document PDF détaillant la conception et les choix techniques du
+                            projet</p>
+                        <span class="card__link">
+                            Consulter
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <line x1="9" y1="3" x2="9" y2="21" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <!-- Card: Carte mentale (ouvre une modale image) -->
+                    <button type="button" class="card" data-modal="mindmap-modal">
+                        <div class="card__icon card__icon--green">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3" />
+                                <circle cx="19" cy="5" r="2" />
+                                <circle cx="5" cy="5" r="2" />
+                                <circle cx="19" cy="19" r="2" />
+                                <circle cx="5" cy="19" r="2" />
+                                <line x1="14.5" y1="10" x2="17.5" y2="6.5" />
+                                <line x1="9.5" y1="10" x2="6.5" y2="6.5" />
+                                <line x1="14.5" y1="14" x2="17.5" y2="17.5" />
+                                <line x1="9.5" y1="14" x2="6.5" y2="17.5" />
+                            </svg>
+                        </div>
+                        <h3 class="card__title">Carte mentale</h3>
+                        <p class="card__description">Vue d'ensemble structurée des concepts et liens du projet</p>
+                        <span class="card__link">
+                            Consulter
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <line x1="9" y1="3" x2="9" y2="21" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <!-- Card: Vidéo de démonstration (ouvre une modale vidéo) -->
+                    <button type="button" class="card" data-modal="video-modal">
+                        <div class="card__icon card__icon--red">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </div>
+                        <h3 class="card__title">Vidéo de démonstration</h3>
+                        <p class="card__description">Démonstration du fonctionnement et des performances du robot</p>
+                        <span class="card__link">
+                            Consulter
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <line x1="9" y1="3" x2="9" y2="21" />
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION GALERIE
+             Carrousel d'images du robot avec navigation
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section galerie" id="galerie">
+            <div class="container">
+                <div class="section__header section__header--center">
+                    <span class="section__label">Galerie</span>
+                    <h2 class="section__title">Images du robot</h2>
+                    <p class="section__description">Découvrez le Robot CRÊPE sous tous les angles</p>
+                </div>
+                <div class="carousel">
+                    <div class="carousel__container">
+                        <div class="carousel__slide active">
+                            <img src="Image robot/robot-1.png" alt="Robot CRÊPE - Vue 1">
+                        </div>
+                        <div class="carousel__slide">
+                            <img src="Image robot/robot-2.png" alt="Robot CRÊPE - Vue 2">
+                        </div>
+                        <div class="carousel__slide">
+                            <img src="Image robot/robot-3.png" alt="Robot CRÊPE - Vue 3">
+                        </div>
+                        <div class="carousel__slide">
+                            <img src="Image robot/robot-4.png" alt="Robot CRÊPE - Vue 4">
+                        </div>
+                        <div class="carousel__slide">
+                            <img src="Image robot/robot-5.png" alt="Robot CRÊPE - Vue 5">
+                        </div>
+                        <div class="carousel__slide">
+                            <img src="Image robot/robot-6.png" alt="Robot CRÊPE - Vue 6">
+                        </div>
+                        <div class="carousel__slide">
+                            <img src="Image robot/robot-7.png" alt="Robot CRÊPE - Vue 7">
+                        </div>
+                    </div>
+                    <!-- Navigation -->
+                    <button class="carousel__btn carousel__btn--prev" aria-label="Image précédente">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                    </button>
+                    <button class="carousel__btn carousel__btn--next" aria-label="Image suivante">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    </button>
+                    <!-- Indicateurs -->
+                    <div class="carousel__dots">
+                        <button class="carousel__dot active" data-slide="0"></button>
+                        <button class="carousel__dot" data-slide="1"></button>
+                        <button class="carousel__dot" data-slide="2"></button>
+                        <button class="carousel__dot" data-slide="3"></button>
+                        <button class="carousel__dot" data-slide="4"></button>
+                        <button class="carousel__dot" data-slide="5"></button>
+                        <button class="carousel__dot" data-slide="6"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION ÉQUIPE
+             Présentation des membres du projet
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section equipe" id="equipe">
+            <div class="container">
+                <div class="section__header section__header--center">
+                    <span class="section__label">L'équipe</span>
+                    <h2 class="section__title">Notre équipe projet</h2>
+                    <p class="section__description">Les membres du groupe et leurs axes de travail</p>
+                </div>
+                <div class="equipe__grid">
+                    <!-- Membre 1: Melvin - Axe 1 -->
+                    <div class="member">
+                        <div class="member__photo member__photo--blue">
+                            <img src="team-melvin.png" alt="Melvin Breton">
+                        </div>
+                        <h3 class="member__name">Melvin Breton</h3>
+                        <span class="member__role">Axe 1</span>
+                    </div>
+                    <!-- Membre 2: Valentin - Axe 2 -->
+                    <div class="member">
+                        <div class="member__photo member__photo--purple">
+                            <img src="team-valentin.png" alt="Valentin Caplot">
+                        </div>
+                        <h3 class="member__name">Valentin Caplot</h3>
+                        <span class="member__role">Axe 2</span>
+                    </div>
+                    <!-- Membre 3: Pacôme - Axe 3 -->
+                    <div class="member">
+                        <div class="member__photo member__photo--orange">
+                            <img src="team-pacome.png" alt="Pacôme Grimaud">
+                        </div>
+                        <h3 class="member__name">Pacôme Grimaud</h3>
+                        <span class="member__role">Axe 3</span>
+                    </div>
+                    <!-- Membre 4: Enzo - Axe 4 -->
+                    <div class="member">
+                        <div class="member__photo member__photo--green">
+                            <img src="team-enzo.png" alt="Enzo Lallican">
+                        </div>
+                        <h3 class="member__name">Enzo Lallican</h3>
+                        <span class="member__role">Axe 4</span>
+                    </div>
+                </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION COÛT DU PROJET
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section cout" id="cout">
+            <div class="container">
+                <div class="section__header section__header--center">
+                    <span class="section__label">Budget</span>
+                    <h2 class="section__title">Coût du projet</h2>
+                    <p class="section__description">Estimation du coût total de réalisation du Robot CRÊPE</p>
+                </div>
+                <div class="cout__content">
+                    <!-- Simulateur -->
+                    <div class="cout__simulator">
+                        <label for="robot-quantity" class="cout__sim-label">Quantité :</label>
+                        <div class="cout__inputs">
+                            <input type="range" id="robot-quantity" min="1" max="10000" value="1" class="cout__slider">
+                            <input type="number" id="robot-quantity-num" min="1" max="10000" value="1"
+                                class="cout__number-input">
+                        </div>
+                    </div>
+
+                    <div class="cout__cards">
+                        <!-- Matière première -->
+                        <div class="cout__card">
+                            <div class="cout__icon cout__icon--blue">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                                </svg>
+                            </div>
+                            <h3 class="cout__label">Matière première</h3>
+                            <p class="cout__desc">Matériaux bruts et composants</p>
+                            <span class="cout__amount">200 €</span>
+                        </div>
+                        <!-- Coût machine -->
+                        <div class="cout__card">
+                            <div class="cout__icon cout__icon--purple">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                                </svg>
+                            </div>
+                            <h3 class="cout__label">Coût machine</h3>
+                            <p class="cout__desc">Usinage, découpe, impression 3D</p>
+                            <span class="cout__amount">415 €</span>
+                        </div>
+                        <!-- Étude & R&D (Variable) -->
+                        <div class="cout__card">
+                            <div class="cout__icon cout__icon--green">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                                </svg>
+                            </div>
+                            <h3 class="cout__label">Étude & R&D <span class="cout__unit">(par unité)</span></h3>
+                            <p class="cout__desc">Conception (20h), amortie sur la production</p>
+                            <span class="cout__amount" id="cout-rd">2 000 €</span>
+                        </div>
+                    </div>
+                    <!-- Total -->
+                    <div class="cout__total">
+                        <div class="cout__total-label">Coût unitaire estimé</div>
+                        <div class="cout__total-amount" id="cout-total">2 615 €</div>
+                        <div class="cout__total-sub">Total commande : <span id="cout-commande">2 615 €</span></div>
+                    </div>
+                </div>
+        </section>
+
+
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION BILAN
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section bilan" id="bilan">
+            <div class="container">
+                <div class="section__header">
+                    <span class="section__label">Synthèse</span>
+                    <h2 class="section__title">Bilan du projet</h2>
+                </div>
+                <div class="bilan__content">
+                    <div class="bilan__points">
+                        <h3 class="bilan__subtitle">Points forts</h3>
+                        <ul class="bilan__list">
+                            <li class="bilan__item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                <span>Conception mécanique robuste et fonctionnelle</span>
+                            </li>
+                            <li class="bilan__item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                <span>Approche méthodique de conception à fabrication</span>
+                            </li>
+                            <li class="bilan__item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                <span>Choix de matériaux optimisés pour le recyclage</span>
+                            </li>
+                            <li class="bilan__item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                <span>Documentation technique complète et structurée</span>
+                            </li>
+                            <li class="bilan__item">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                    <polyline points="22 4 12 14.01 9 11.01" />
+                                </svg>
+                                <span>Collaboration efficace au sein de l'équipe projet</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bilan__visual">
+                        <div class="bilan__comparison">
+                            <div class="comparison__item">
+                                <div class="comparison__image">
+                                    <img src="topsolid.png" alt="Modèle TopSolid">
+                                </div>
+                                <div class="comparison__label">
+                                    <span class="comparison__tag comparison__tag--before">Avant</span>
+                                    <h4 class="comparison__title">Modèle TopSolid</h4>
+                                    <p class="comparison__text">Conception CAO</p>
+                                </div>
+                            </div>
+                            <div class="comparison__arrow">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                            <div class="comparison__item">
+                                <div class="comparison__image">
+                                    <img src="robot-reel.png" alt="Robot réel fabriqué">
+                                </div>
+                                <div class="comparison__label">
+                                    <span class="comparison__tag comparison__tag--after">Après</span>
+                                    <h4 class="comparison__title">Robot réel</h4>
+                                    <p class="comparison__text">Fabrication terminée</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════════
+             SECTION CONTACT
+        ═══════════════════════════════════════════════════════════════════ -->
+        <section class="section contact" id="contact">
+            <div class="container">
+                <div class="section__header section__header--center">
+                    <span class="section__label">Contact</span>
+                    <h2 class="section__title">Nous contacter</h2>
+                    <p class="section__description">Une question sur le projet ou une demande de démonstration ?</p>
+                </div>
+                <div class="contact__container">
+                    <div class="contact__card">
+                        <div class="contact__email">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="contact__icon">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <a href="mailto:melvin.breton@etudiant.univ-rennes.fr" class="contact__link">
+                                melvin.breton@etudiant.univ-rennes.fr
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════════════════════════ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__info">
+                    <p class="footer__title">BUT GMP – IUT Rennes</p>
+                    <p class="footer__subtitle">SAÉ 3.2 – Conception mécanique</p>
+                </div>
+                <div class="footer__credits">
+                    <p>Année universitaire 2025-2026</p>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>Projet Robot CRÊPE – Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         MODALE PDF
+         Affiche le rapport technique en plein écran
+    ═══════════════════════════════════════════════════════════════════ -->
+    <div class="modal" id="pdf-modal" aria-hidden="true">
+        <div class="modal__overlay" data-close-modal></div>
+        <div class="modal__container">
+            <div class="modal__header">
+                <h2 class="modal__title">Rapport technique</h2>
+                <button class="modal__close" data-close-modal aria-label="Fermer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body">
+                <iframe src="rapport-technique.pdf" class="modal__pdf" title="Rapport technique PDF"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         MODALE CARTE MENTALE INTERACTIVE
+         Carte mentale radiale avec branches visuelles
+    ═══════════════════════════════════════════════════════════════════ -->
+    <div class="modal" id="mindmap-modal" aria-hidden="true">
+        <div class="modal__overlay" data-close-modal></div>
+        <div class="modal__container modal__container--mindmap">
+            <div class="modal__header">
+                <h2 class="modal__title">Carte mentale du projet</h2>
+                <button class="modal__close" data-close-modal aria-label="Fermer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body modal__body--mindmap">
+                <div class="radial-mindmap">
+                    <!-- SVG pour les lignes de connexion -->
+                    <svg class="mindmap-lines" viewBox="0 0 900 700">
+                        <!-- Lignes du centre vers les branches principales -->
+                        <line x1="450" y1="350" x2="130" y2="100" class="line line--blue" />
+                        <line x1="450" y1="350" x2="450" y2="60" class="line line--purple" />
+                        <line x1="450" y1="350" x2="770" y2="100" class="line line--orange" />
+                        <line x1="450" y1="350" x2="130" y2="600" class="line line--green" />
+                        <line x1="450" y1="350" x2="450" y2="640" class="line line--red" />
+                        <line x1="450" y1="350" x2="770" y2="600" class="line line--cyan" />
+                    </svg>
+
+                    <!-- Nœud Central -->
+                    <div class="radial-node radial-node--center">
+                        <div class="radial-node__content">
+                            <span class="radial-node__icon">🤖</span>
+                            <span class="radial-node__title">Robot CRÊPE</span>
+                            <span class="radial-node__sub">SAÉ 3.2</span>
+                        </div>
+                    </div>
+
+                    <!-- Branche: Axe 1 (Haut Gauche) -->
+                    <div class="radial-node radial-node--branch radial-node--pos-tl" data-branch="axe1">
+                        <div class="radial-node__content radial-node__content--blue">
+                            <span class="radial-node__icon">🔵</span>
+                            <span class="radial-node__title">Axe 1</span>
+                            <span class="radial-node__sub">Pivot Bâti/Bras</span>
+                        </div>
+                        <div class="radial-node__children">
+                            <span class="radial-child">Rotation ±150°</span>
+                            <span class="radial-child">NEMA 23</span>
+                            <span class="radial-child">Inox 316L</span>
+                        </div>
+                    </div>
+
+                    <!-- Branche: Axe 2 (Haut Centre) -->
+                    <div class="radial-node radial-node--branch radial-node--pos-tc" data-branch="axe2">
+                        <div class="radial-node__content radial-node__content--purple">
+                            <span class="radial-node__icon">🟣</span>
+                            <span class="radial-node__title">Axe 2</span>
+                            <span class="radial-node__sub">Pivot Intermédiaire</span>
+                        </div>
+                        <div class="radial-node__children">
+                            <span class="radial-child">Entraxe 130mm</span>
+                            <span class="radial-child">NEMA 17</span>
+                            <span class="radial-child">Tôle en U</span>
+                        </div>
+                    </div>
+
+                    <!-- Branche: Axe 3 (Haut Droite) -->
+                    <div class="radial-node radial-node--branch radial-node--pos-tr" data-branch="axe3">
+                        <div class="radial-node__content radial-node__content--orange">
+                            <span class="radial-node__icon">🟠</span>
+                            <span class="radial-node__title">Axe 3</span>
+                            <span class="radial-node__sub">Glissière Verticale</span>
+                        </div>
+                        <div class="radial-node__children">
+                            <span class="radial-child">Course 130mm</span>
+                            <span class="radial-child">Rail + Chariot</span>
+                            <span class="radial-child">Courroie 537mm</span>
+                        </div>
+                    </div>
+
+                    <!-- Branche: Axe 4 (Bas Gauche) -->
+                    <div class="radial-node radial-node--branch radial-node--pos-bl" data-branch="axe4">
+                        <div class="radial-node__content radial-node__content--green">
+                            <span class="radial-node__icon">🟢</span>
+                            <span class="radial-node__title">Axe 4</span>
+                            <span class="radial-node__sub">Pivot Outil</span>
+                        </div>
+                        <div class="radial-node__children">
+                            <span class="radial-child">360°/s</span>
+                            <span class="radial-child">Skilouze</span>
+                            <span class="radial-child">Rozelle</span>
+                        </div>
+                    </div>
+
+                    <!-- Branche: Fabrication (Bas Centre) -->
+                    <div class="radial-node radial-node--branch radial-node--pos-bc" data-branch="fab">
+                        <div class="radial-node__content radial-node__content--red">
+                            <span class="radial-node__icon">🔧</span>
+                            <span class="radial-node__title">Fabrication</span>
+                            <span class="radial-node__sub">Procédés</span>
+                        </div>
+                        <div class="radial-node__children">
+                            <span class="radial-child">Usinage</span>
+                            <span class="radial-child">Découpe Laser</span>
+                            <span class="radial-child">Impression 3D</span>
+                        </div>
+                    </div>
+
+                    <!-- Branche: Étude (Bas Droite) -->
+                    <div class="radial-node radial-node--branch radial-node--pos-br" data-branch="etude">
+                        <div class="radial-node__content radial-node__content--cyan">
+                            <span class="radial-node__icon">📐</span>
+                            <span class="radial-node__title">Étude</span>
+                            <span class="radial-node__sub">Dimensionnement</span>
+                        </div>
+                        <div class="radial-node__children">
+                            <span class="radial-child">PFS</span>
+                            <span class="radial-child">Paliers iglidur®</span>
+                            <span class="radial-child">1,9 MPa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════
+         MODALE VIDÉO
+         Affiche la vidéo de démonstration en plein écran
+    ═══════════════════════════════════════════════════════════════════ -->
+    <div class="modal" id="video-modal" aria-hidden="true">
+        <div class="modal__overlay" data-close-modal></div>
+        <div class="modal__container modal__container--video">
+            <div class="modal__header">
+                <h2 class="modal__title">Vidéo de démonstration</h2>
+                <button class="modal__close" data-close-modal aria-label="Fermer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal__body modal__body--video">
+                <video controls class="modal__video" id="demo-video">
+                    <source src="video-demo.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
