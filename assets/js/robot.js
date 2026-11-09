@@ -19,11 +19,11 @@ const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
 const lerp = (a, b, t) => a + (b - a) * t;
 
-export function createRobot(canvas) {
+export function createRobot(canvas, opts = {}) {
   const test = document.createElement('canvas');
   if (!(test.getContext('webgl2') || test.getContext('webgl'))) throw new Error('WebGL indisponible');
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: !!opts.preserve });
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -260,7 +260,7 @@ export function createRobot(canvas) {
     axe1: { t: () => anchorWorld(1), R: 12, th: 0.35, ph: 1.15 },
     axe2: { t: () => anchorWorld(2), R: 9, th: 1.15, ph: 1.05 },
     axe3: { t: () => anchorWorld(3), R: 10.5, th: 0.85, ph: 1.3 },
-    axe4: { t: () => anchorWorld(4).add(new THREE.Vector3(1.0, 0, 0)), R: 9.5, th: 0.25, ph: 1.22 },
+    axe4: { t: () => anchorWorld(4).add(new THREE.Vector3(1.7, 0, 0.3)), R: 13, th: 0.3, ph: 1.22 },
     assemble: { t: () => new THREE.Vector3(3.0, 3.1, 0), R: 23, th: -0.45, ph: 1.3 },
   };
   const KEYS = [
@@ -380,8 +380,8 @@ export function createRobot(canvas) {
     );
     camera.lookAt(cam.t);
     // Cadrage : robot à droite sur desktop, en haut sur mobile
-    if (portrait) camera.setViewOffset(W, H, 0, H * 0.2, W, H);
-    else camera.setViewOffset(W, H, -W * lerp(0.16, 0.14, ss(0, 0.2, prog)), 0, W, H);
+    if (portrait) camera.setViewOffset(W, H, 0, H * lerp(0.13, 0.2, ss(0, 0.1, prog)), W, H);
+    else camera.setViewOffset(W, H, -W * lerp(0.19, 0.14, ss(0, 0.2, prog)), 0, W, H);
 
     renderer.render(scene, camera);
     if (!readyDone) { readyDone = true; resolveReady(); }
@@ -413,6 +413,6 @@ export function createRobot(canvas) {
       renderer.setAnimationLoop(v ? tick : null);
     },
     resize,
-    joints, _dbg: () => ({ cam: { ...cam, t: cam.t.toArray() }, pos: camera.position.toArray(), explodeCur, focusCur, W, H, hero, prog, ptr }),
+    joints,
   };
 }

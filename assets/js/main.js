@@ -53,7 +53,7 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
 .lenis.lenis-smooth iframe{pointer-events:none}
-.lb{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:rgba(8,8,9,.94);color:#EDEAE4;font-family:'Inter Tight',system-ui,sans-serif}
+.lb{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;background:rgba(8,8,9,.985);color:#EDEAE4;font-family:'Inter Tight',system-ui,sans-serif}
 .lb.is-open{display:flex}
 .lb__fig{margin:0;max-width:min(92vw,1400px);max-height:86vh;display:flex;flex-direction:column;align-items:center;gap:14px}
 .lb__img{max-width:100%;max-height:78vh;object-fit:contain;display:block}
@@ -148,7 +148,7 @@ html.lenis,html.lenis body{height:auto}
       const canvas = document.getElementById('robot-canvas');
       if (!canvas || typeof mod.createRobot !== 'function') throw new Error('canvas ou createRobot absent');
       const r = mod.createRobot(canvas);
-      robot = r; window.__robot = r;
+      robot = r;
       if (r && r.ready && typeof r.ready.catch === 'function') {
         r.ready.catch(() => { doc.classList.add('no-webgl'); robot = null; });
       }
@@ -710,7 +710,7 @@ html.lenis,html.lenis body{height:auto}
       const sync = () => {
         const playing = !video.paused && !video.ended;
         film.classList.toggle('is-playing', playing);
-        if (btn) { btn.setAttribute('aria-pressed', String(playing)); btn.setAttribute('aria-label', playing ? 'Mettre la vidéo en pause' : 'Lire la vidéo'); }
+        if (btn) { btn.setAttribute('aria-pressed', String(playing)); btn.setAttribute('data-cursor', playing ? 'Pause' : 'Lecture'); btn.setAttribute('aria-label', playing ? 'Mettre la vidéo en pause' : 'Lire la vidéo'); }
       };
       const toggle = () => {
         if (video.paused || video.ended) { const pr = video.play(); if (pr && pr.catch) pr.catch(() => {}); } else video.pause();
