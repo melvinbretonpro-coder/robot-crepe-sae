@@ -1,747 +1,448 @@
-<!DOCTYPE html>
-<html lang="fr">
-
+<!doctype html>
+<html lang="fr" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Projet SAÉ 3.2 - Robot CRÊPE - Conception mécanique & approche CPD - BUT GMP IUT Rennes">
-    <title>Projet SAÉ 3.2 – Robot CRÊPE | BUT GMP</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robot CRÊPE · SAÉ 3.2 · BUT GMP · IUT Rennes</title>
+<meta name="description" content="Robot SCARA à quatre axes qui retourne des crêpes. Projet SAÉ 3.2, BUT Génie Mécanique et Productique, IUT Rennes, 2025-2026.">
+<meta name="theme-color" content="#0B0B0C">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Robot CRÊPE · SAÉ 3.2 · IUT Rennes">
+<meta property="og:description" content="Robot SCARA à quatre axes qui retourne des crêpes. De la CAO TopSolid à la fabrication, quatre axes, quatre ingénieurs.">
+<meta property="og:url" content="https://melvinbretonpro-coder.github.io/robot-crepe-sae/">
+<meta property="og:image" content="https://melvinbretonpro-coder.github.io/robot-crepe-sae/assets/img/robot-reel.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230B0B0C'/%3E%3Ccircle cx='16' cy='16' r='8' fill='none' stroke='%23E3A857' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23E3A857'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script type="module" src="assets/js/main.js"></script>
 </head>
-
 <body>
-    <!-- ═══════════════════════════════════════════════════════════════════
-         NAVIGATION
-    ═══════════════════════════════════════════════════════════════════ -->
-    <nav class="navbar" id="navbar">
-        <div class="navbar__container">
-            <a href="#" class="navbar__logo">Robot CRÊPE</a>
-            <ul class="navbar__menu">
-                <li><a href="#presentation" class="navbar__link">Présentation</a></li>
-                <li><a href="#livrables" class="navbar__link">Livrables</a></li>
-                <li><a href="#equipe" class="navbar__link">Équipe</a></li>
-                <li><a href="#bilan" class="navbar__link">Bilan</a></li>
-                <li><a href="#contact" class="navbar__link">Contact</a></li>
-                <li>
-                    <button id="theme-toggle" class="theme-toggle" aria-label="Changer de thème">
-                        <!-- Soleil (affiché en thème sombre) -->
-                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                        <!-- Lune (affichée en thème clair) -->
-                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-        </div>
+<a class="skip" href="#manifeste">Aller au contenu</a>
+
+<div class="loader" aria-hidden="true">
+  <div class="loader__word"><span>C</span><span>R</span><span>Ê</span><span>P</span><span>E</span></div>
+  <div class="loader__count">000</div>
+</div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__label"></span></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="robot-stage" aria-hidden="true">
+  <canvas id="robot-canvas"></canvas>
+  <img class="robot-fallback" src="assets/img/robot-reel.webp" alt="" width="1024" height="1536">
+</div>
+
+<header class="nav">
+  <div class="nav__bar">
+    <a class="nav__brand" href="#hero">Robot CRÊPE</a>
+    <nav class="nav__links" aria-label="Navigation principale">
+      <a href="#decomposition">Décomposition</a>
+      <a href="#etude">Étude</a>
+      <a href="#fabrication">Fabrication</a>
+      <a href="#equipe">Équipe</a>
+      <a href="#budget">Budget</a>
     </nav>
-    <!-- ═══════════════════════════════════════════════════════════════════
-         HERO SECTION
-    ═══════════════════════════════════════════════════════════════════ -->
-    <header class="hero">
-        <div class="hero__background">
-            <div class="hero__gradient"></div>
-            <div class="hero__grid"></div>
-        </div>
-        <div class="hero__content">
-            <span class="hero__badge">BUT GMP – IUT Rennes</span>
-            <h1 class="hero__title">
-                Projet SAÉ 3.2
-                <span class="hero__title-highlight">Robot CRÊPE</span>
-            </h1>
-            <p class="hero__subtitle">Conception mécanique & fabrication</p>
-            <a href="#livrables" class="hero__cta">
-                <span>Accéder aux livrables</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M7 17L17 7" />
-                    <path d="M7 7h10v10" />
-                </svg>
-            </a>
-        </div>
-        <div class="hero__scroll-indicator">
-            <span>Découvrir</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 5v14" />
-                <path d="m19 12-7 7-7-7" />
-            </svg>
-        </div>
-    </header>
+    <a class="nav__cta" href="#livrables" data-magnetic>Livrables</a>
+    <span class="nav__progress"></span>
+  </div>
+</header>
 
-    <main>
-        <!-- ═══════════════════════════════════════════════════════════════════
-             PRÉSENTATION DU PROJET
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section presentation" id="presentation">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__label">À propos</span>
-                    <h2 class="section__title">Présentation du projet</h2>
-                </div>
-                <div class="presentation__grid">
-                    <div class="presentation__content">
-                        <p class="presentation__text">
-                            Le <strong>Robot CRÊPE</strong> est un projet de conception mécanique développé dans le
-                            cadre de la SAÉ 3.2 du BUT Génie Mécanique et Productique. Son objectif est de répondre à un
-                            cahier des charges technique tout en intégrant une démarche d'éco-conception.
-                        </p>
-                        <p class="presentation__text">
-                            Ce projet met en œuvre une approche complète allant de la <strong>conception</strong> à la
-                            <strong>fabrication</strong>, en passant par des phases de prototypage et de tests
-                            afin d'aboutir à un robot fonctionnel.
-                        </p>
-                    </div>
-                    <div class="presentation__steps">
-                        <div class="step">
-                            <div class="step__number">01</div>
-                            <div class="step__content">
-                                <h3 class="step__title">Conception</h3>
-                                <p class="step__text">Modélisation CAO et dimensionnement mécanique</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step__number">02</div>
-                            <div class="step__content">
-                                <h3 class="step__title">Fabrication</h3>
-                                <p class="step__text">Choix des procédés et réalisation des pièces</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step__number">03</div>
-                            <div class="step__content">
-                                <h3 class="step__title">Tests & Validation</h3>
-                                <p class="step__text">Vérification des performances et ajustements</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<main>
 
-        <!-- ═══════════════════════════════════════════════════════════════════
-             SECTION LIVRABLES
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section livrables" id="livrables">
-            <div class="container">
-                <div class="section__header section__header--center">
-                    <span class="section__label">Ressources</span>
-                    <h2 class="section__title">Livrables du projet</h2>
-                    <p class="section__description">Accédez à l'ensemble des documents et ressources du projet Robot
-                        CRÊPE</p>
-                </div>
-                <div class="livrables__grid">
-                    <!-- Card: Rapport technique (ouvre une modale PDF) -->
-                    <button type="button" class="card" data-modal="pdf-modal">
-                        <div class="card__icon card__icon--blue">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                                <line x1="16" y1="13" x2="8" y2="13" />
-                                <line x1="16" y1="17" x2="8" y2="17" />
-                                <polyline points="10 9 9 9 8 9" />
-                            </svg>
-                        </div>
-                        <h3 class="card__title">Rapport technique</h3>
-                        <p class="card__description">Document PDF détaillant la conception et les choix techniques du
-                            projet</p>
-                        <span class="card__link">
-                            Consulter
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                <line x1="9" y1="3" x2="9" y2="21" />
-                            </svg>
-                        </span>
-                    </button>
+<!-- 01 HERO -->
+<section id="hero" class="hero" data-theme="dark" aria-label="Introduction">
+  <ul class="hero__meta mono">
+    <li>SAÉ 3.2</li><li>BUT GMP</li><li>IUT Rennes</li><li>2025-2026</li>
+  </ul>
+  <h1 class="hero__title">
+    <span class="hero__robot">Robot</span>
+    <span class="hero__crepe" data-split="chars">CRÊPE</span>
+  </h1>
+  <div class="hero__foot">
+    <p class="hero__lede">Robot SCARA à quatre axes qui retourne des crêpes.</p>
+    <a class="hero__scroll mono" href="#manifeste"><span>Défiler</span><i aria-hidden="true"></i></a>
+  </div>
+</section>
 
-                    <!-- Card: Carte mentale (ouvre une modale image) -->
-                    <button type="button" class="card" data-modal="mindmap-modal">
-                        <div class="card__icon card__icon--green">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="3" />
-                                <circle cx="19" cy="5" r="2" />
-                                <circle cx="5" cy="5" r="2" />
-                                <circle cx="19" cy="19" r="2" />
-                                <circle cx="5" cy="19" r="2" />
-                                <line x1="14.5" y1="10" x2="17.5" y2="6.5" />
-                                <line x1="9.5" y1="10" x2="6.5" y2="6.5" />
-                                <line x1="14.5" y1="14" x2="17.5" y2="17.5" />
-                                <line x1="9.5" y1="14" x2="6.5" y2="17.5" />
-                            </svg>
-                        </div>
-                        <h3 class="card__title">Carte mentale</h3>
-                        <p class="card__description">Vue d'ensemble structurée des concepts et liens du projet</p>
-                        <span class="card__link">
-                            Consulter
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                <line x1="9" y1="3" x2="9" y2="21" />
-                            </svg>
-                        </span>
-                    </button>
+<!-- 02 MANIFESTE -->
+<section id="manifeste" class="sec manifest" data-theme="dark">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">02 / 14</span><span class="eyebrow__line"></span><span>Manifeste</span></p>
+    <div class="manifest__lines">
+      <p class="manifest__line" data-split="words">Quatre axes.</p>
+      <p class="manifest__line" data-split="words">Quatre ingénieurs.</p>
+      <p class="manifest__line manifest__line--em" data-split="words">Une crêpe.</p>
+    </div>
+    <div class="manifest__body">
+      <p data-reveal>Répondre à un cahier des charges avec une démarche d’éco-conception, de la conception CAO (TopSolid) à la fabrication puis aux tests. Composants uniquement issus de la boutique de l’IUT. Moyens : usinage conventionnel, découpe laser, pliage de tôle, impression 3D.</p>
+    </div>
+  </div>
+</section>
 
-                    <!-- Card: Vidéo de démonstration (ouvre une modale vidéo) -->
-                    <button type="button" class="card" data-modal="video-modal">
-                        <div class="card__icon card__icon--red">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
-                        </div>
-                        <h3 class="card__title">Vidéo de démonstration</h3>
-                        <p class="card__description">Démonstration du fonctionnement et des performances du robot</p>
-                        <span class="card__link">
-                            Consulter
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                <line x1="9" y1="3" x2="9" y2="21" />
-                            </svg>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════════
-             SECTION GALERIE
-             Carrousel d'images du robot avec navigation
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section galerie" id="galerie">
-            <div class="container">
-                <div class="section__header section__header--center">
-                    <span class="section__label">Galerie</span>
-                    <h2 class="section__title">Images du robot</h2>
-                    <p class="section__description">Découvrez le Robot CRÊPE sous tous les angles</p>
-                </div>
-                <div class="carousel">
-                    <div class="carousel__container">
-                        <div class="carousel__slide active">
-                            <img src="Image robot/robot-1.png" alt="Robot CRÊPE - Vue 1">
-                        </div>
-                        <div class="carousel__slide">
-                            <img src="Image robot/robot-2.png" alt="Robot CRÊPE - Vue 2">
-                        </div>
-                        <div class="carousel__slide">
-                            <img src="Image robot/robot-3.png" alt="Robot CRÊPE - Vue 3">
-                        </div>
-                        <div class="carousel__slide">
-                            <img src="Image robot/robot-4.png" alt="Robot CRÊPE - Vue 4">
-                        </div>
-                        <div class="carousel__slide">
-                            <img src="Image robot/robot-5.png" alt="Robot CRÊPE - Vue 5">
-                        </div>
-                        <div class="carousel__slide">
-                            <img src="Image robot/robot-6.png" alt="Robot CRÊPE - Vue 6">
-                        </div>
-                        <div class="carousel__slide">
-                            <img src="Image robot/robot-7.png" alt="Robot CRÊPE - Vue 7">
-                        </div>
-                    </div>
-                    <!-- Navigation -->
-                    <button class="carousel__btn carousel__btn--prev" aria-label="Image précédente">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6" />
-                        </svg>
-                    </button>
-                    <button class="carousel__btn carousel__btn--next" aria-label="Image suivante">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6" />
-                        </svg>
-                    </button>
-                    <!-- Indicateurs -->
-                    <div class="carousel__dots">
-                        <button class="carousel__dot active" data-slide="0"></button>
-                        <button class="carousel__dot" data-slide="1"></button>
-                        <button class="carousel__dot" data-slide="2"></button>
-                        <button class="carousel__dot" data-slide="3"></button>
-                        <button class="carousel__dot" data-slide="4"></button>
-                        <button class="carousel__dot" data-slide="5"></button>
-                        <button class="carousel__dot" data-slide="6"></button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- ═══════════════════════════════════════════════════════════════════
-             SECTION ÉQUIPE
-             Présentation des membres du projet
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section equipe" id="equipe">
-            <div class="container">
-                <div class="section__header section__header--center">
-                    <span class="section__label">L'équipe</span>
-                    <h2 class="section__title">Notre équipe projet</h2>
-                    <p class="section__description">Les membres du groupe et leurs axes de travail</p>
-                </div>
-                <div class="equipe__grid">
-                    <!-- Membre 1: Melvin - Axe 1 -->
-                    <div class="member">
-                        <div class="member__photo member__photo--blue">
-                            <img src="team-melvin.png" alt="Melvin Breton">
-                        </div>
-                        <h3 class="member__name">Melvin Breton</h3>
-                        <span class="member__role">Axe 1</span>
-                    </div>
-                    <!-- Membre 2: Valentin - Axe 2 -->
-                    <div class="member">
-                        <div class="member__photo member__photo--purple">
-                            <img src="team-valentin.png" alt="Valentin Caplot">
-                        </div>
-                        <h3 class="member__name">Valentin Caplot</h3>
-                        <span class="member__role">Axe 2</span>
-                    </div>
-                    <!-- Membre 3: Pacôme - Axe 3 -->
-                    <div class="member">
-                        <div class="member__photo member__photo--orange">
-                            <img src="team-pacome.png" alt="Pacôme Grimaud">
-                        </div>
-                        <h3 class="member__name">Pacôme Grimaud</h3>
-                        <span class="member__role">Axe 3</span>
-                    </div>
-                    <!-- Membre 4: Enzo - Axe 4 -->
-                    <div class="member">
-                        <div class="member__photo member__photo--green">
-                            <img src="team-enzo.png" alt="Enzo Lallican">
-                        </div>
-                        <h3 class="member__name">Enzo Lallican</h3>
-                        <span class="member__role">Axe 4</span>
-                    </div>
-                </div>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════════
-             SECTION COÛT DU PROJET
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section cout" id="cout">
-            <div class="container">
-                <div class="section__header section__header--center">
-                    <span class="section__label">Budget</span>
-                    <h2 class="section__title">Coût du projet</h2>
-                    <p class="section__description">Estimation du coût total de réalisation du Robot CRÊPE</p>
-                </div>
-                <div class="cout__content">
-                    <!-- Simulateur -->
-                    <div class="cout__simulator">
-                        <label for="robot-quantity" class="cout__sim-label">Quantité :</label>
-                        <div class="cout__inputs">
-                            <input type="range" id="robot-quantity" min="1" max="10000" value="1" class="cout__slider">
-                            <input type="number" id="robot-quantity-num" min="1" max="10000" value="1"
-                                class="cout__number-input">
-                        </div>
-                    </div>
-
-                    <div class="cout__cards">
-                        <!-- Matière première -->
-                        <div class="cout__card">
-                            <div class="cout__icon cout__icon--blue">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                                </svg>
-                            </div>
-                            <h3 class="cout__label">Matière première</h3>
-                            <p class="cout__desc">Matériaux bruts et composants</p>
-                            <span class="cout__amount">200 €</span>
-                        </div>
-                        <!-- Coût machine -->
-                        <div class="cout__card">
-                            <div class="cout__icon cout__icon--purple">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="3" />
-                                    <path
-                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-                                </svg>
-                            </div>
-                            <h3 class="cout__label">Coût machine</h3>
-                            <p class="cout__desc">Usinage, découpe, impression 3D</p>
-                            <span class="cout__amount">415 €</span>
-                        </div>
-                        <!-- Étude & R&D (Variable) -->
-                        <div class="cout__card">
-                            <div class="cout__icon cout__icon--green">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                                </svg>
-                            </div>
-                            <h3 class="cout__label">Étude & R&D <span class="cout__unit">(par unité)</span></h3>
-                            <p class="cout__desc">Conception (20h), amortie sur la production</p>
-                            <span class="cout__amount" id="cout-rd">2 000 €</span>
-                        </div>
-                    </div>
-                    <!-- Total -->
-                    <div class="cout__total">
-                        <div class="cout__total-label">Coût unitaire estimé</div>
-                        <div class="cout__total-amount" id="cout-total">2 615 €</div>
-                        <div class="cout__total-sub">Total commande : <span id="cout-commande">2 615 €</span></div>
-                    </div>
-                </div>
-        </section>
-
-
-
-        <!-- ═══════════════════════════════════════════════════════════════════
-             SECTION BILAN
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section bilan" id="bilan">
-            <div class="container">
-                <div class="section__header">
-                    <span class="section__label">Synthèse</span>
-                    <h2 class="section__title">Bilan du projet</h2>
-                </div>
-                <div class="bilan__content">
-                    <div class="bilan__points">
-                        <h3 class="bilan__subtitle">Points forts</h3>
-                        <ul class="bilan__list">
-                            <li class="bilan__item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
-                                </svg>
-                                <span>Conception mécanique robuste et fonctionnelle</span>
-                            </li>
-                            <li class="bilan__item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
-                                </svg>
-                                <span>Approche méthodique de conception à fabrication</span>
-                            </li>
-                            <li class="bilan__item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
-                                </svg>
-                                <span>Choix de matériaux optimisés pour le recyclage</span>
-                            </li>
-                            <li class="bilan__item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
-                                </svg>
-                                <span>Documentation technique complète et structurée</span>
-                            </li>
-                            <li class="bilan__item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                    <polyline points="22 4 12 14.01 9 11.01" />
-                                </svg>
-                                <span>Collaboration efficace au sein de l'équipe projet</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bilan__visual">
-                        <div class="bilan__comparison">
-                            <div class="comparison__item">
-                                <div class="comparison__image">
-                                    <img src="topsolid.png" alt="Modèle TopSolid">
-                                </div>
-                                <div class="comparison__label">
-                                    <span class="comparison__tag comparison__tag--before">Avant</span>
-                                    <h4 class="comparison__title">Modèle TopSolid</h4>
-                                    <p class="comparison__text">Conception CAO</p>
-                                </div>
-                            </div>
-                            <div class="comparison__arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                    <polyline points="12 5 19 12 12 19" />
-                                </svg>
-                            </div>
-                            <div class="comparison__item">
-                                <div class="comparison__image">
-                                    <img src="robot-reel.png" alt="Robot réel fabriqué">
-                                </div>
-                                <div class="comparison__label">
-                                    <span class="comparison__tag comparison__tag--after">Après</span>
-                                    <h4 class="comparison__title">Robot réel</h4>
-                                    <p class="comparison__text">Fabrication terminée</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        </section>
-
-        <!-- ═══════════════════════════════════════════════════════════════════
-             SECTION CONTACT
-        ═══════════════════════════════════════════════════════════════════ -->
-        <section class="section contact" id="contact">
-            <div class="container">
-                <div class="section__header section__header--center">
-                    <span class="section__label">Contact</span>
-                    <h2 class="section__title">Nous contacter</h2>
-                    <p class="section__description">Une question sur le projet ou une demande de démonstration ?</p>
-                </div>
-                <div class="contact__container">
-                    <div class="contact__card">
-                        <div class="contact__email">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="contact__icon">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                                </path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                            <a href="mailto:melvin.breton@etudiant.univ-rennes.fr" class="contact__link">
-                                melvin.breton@etudiant.univ-rennes.fr
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ═══════════════════════════════════════════════════════════════════
-         FOOTER
-    ═══════════════════════════════════════════════════════════════════ -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__info">
-                    <p class="footer__title">BUT GMP – IUT Rennes</p>
-                    <p class="footer__subtitle">SAÉ 3.2 – Conception mécanique</p>
-                </div>
-                <div class="footer__credits">
-                    <p>Année universitaire 2025-2026</p>
-                </div>
-            </div>
-            <div class="footer__bottom">
-                <p>Projet Robot CRÊPE – Tous droits réservés</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ═══════════════════════════════════════════════════════════════════
-         MODALE PDF
-         Affiche le rapport technique en plein écran
-    ═══════════════════════════════════════════════════════════════════ -->
-    <div class="modal" id="pdf-modal" aria-hidden="true">
-        <div class="modal__overlay" data-close-modal></div>
-        <div class="modal__container">
-            <div class="modal__header">
-                <h2 class="modal__title">Rapport technique</h2>
-                <button class="modal__close" data-close-modal aria-label="Fermer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                </button>
-            </div>
-            <div class="modal__body">
-                <iframe src="rapport-technique.pdf" class="modal__pdf" title="Rapport technique PDF"></iframe>
-            </div>
-        </div>
+<!-- 03 DECOMPOSITION -->
+<section id="decomposition" class="explode" data-theme="dark" aria-label="Vue éclatée du robot">
+  <div class="explode__pin">
+    <div class="explode__intro">
+      <p class="eyebrow"><span class="eyebrow__num">03 / 14</span><span class="eyebrow__line"></span><span>Décomposition</span></p>
+      <h2 class="explode__title">Vue <em>éclatée</em></h2>
+      <p class="explode__sub">Le robot se décompose en quatre axes. Chacun est mis en valeur, puis l’ensemble se réassemble.</p>
     </div>
 
-
-
-    <!-- ═══════════════════════════════════════════════════════════════════
-         MODALE CARTE MENTALE INTERACTIVE
-         Carte mentale radiale avec branches visuelles
-    ═══════════════════════════════════════════════════════════════════ -->
-    <div class="modal" id="mindmap-modal" aria-hidden="true">
-        <div class="modal__overlay" data-close-modal></div>
-        <div class="modal__container modal__container--mindmap">
-            <div class="modal__header">
-                <h2 class="modal__title">Carte mentale du projet</h2>
-                <button class="modal__close" data-close-modal aria-label="Fermer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                </button>
-            </div>
-            <div class="modal__body modal__body--mindmap">
-                <div class="radial-mindmap">
-                    <!-- SVG pour les lignes de connexion -->
-                    <svg class="mindmap-lines" viewBox="0 0 900 700">
-                        <!-- Lignes du centre vers les branches principales -->
-                        <line x1="450" y1="350" x2="130" y2="100" class="line line--blue" />
-                        <line x1="450" y1="350" x2="450" y2="60" class="line line--purple" />
-                        <line x1="450" y1="350" x2="770" y2="100" class="line line--orange" />
-                        <line x1="450" y1="350" x2="130" y2="600" class="line line--green" />
-                        <line x1="450" y1="350" x2="450" y2="640" class="line line--red" />
-                        <line x1="450" y1="350" x2="770" y2="600" class="line line--cyan" />
-                    </svg>
-
-                    <!-- Nœud Central -->
-                    <div class="radial-node radial-node--center">
-                        <div class="radial-node__content">
-                            <span class="radial-node__icon">🤖</span>
-                            <span class="radial-node__title">Robot CRÊPE</span>
-                            <span class="radial-node__sub">SAÉ 3.2</span>
-                        </div>
-                    </div>
-
-                    <!-- Branche: Axe 1 (Haut Gauche) -->
-                    <div class="radial-node radial-node--branch radial-node--pos-tl" data-branch="axe1">
-                        <div class="radial-node__content radial-node__content--blue">
-                            <span class="radial-node__icon">🔵</span>
-                            <span class="radial-node__title">Axe 1</span>
-                            <span class="radial-node__sub">Pivot Bâti/Bras</span>
-                        </div>
-                        <div class="radial-node__children">
-                            <span class="radial-child">Rotation ±150°</span>
-                            <span class="radial-child">NEMA 23</span>
-                            <span class="radial-child">Inox 316L</span>
-                        </div>
-                    </div>
-
-                    <!-- Branche: Axe 2 (Haut Centre) -->
-                    <div class="radial-node radial-node--branch radial-node--pos-tc" data-branch="axe2">
-                        <div class="radial-node__content radial-node__content--purple">
-                            <span class="radial-node__icon">🟣</span>
-                            <span class="radial-node__title">Axe 2</span>
-                            <span class="radial-node__sub">Pivot Intermédiaire</span>
-                        </div>
-                        <div class="radial-node__children">
-                            <span class="radial-child">Entraxe 130mm</span>
-                            <span class="radial-child">NEMA 17</span>
-                            <span class="radial-child">Tôle en U</span>
-                        </div>
-                    </div>
-
-                    <!-- Branche: Axe 3 (Haut Droite) -->
-                    <div class="radial-node radial-node--branch radial-node--pos-tr" data-branch="axe3">
-                        <div class="radial-node__content radial-node__content--orange">
-                            <span class="radial-node__icon">🟠</span>
-                            <span class="radial-node__title">Axe 3</span>
-                            <span class="radial-node__sub">Glissière Verticale</span>
-                        </div>
-                        <div class="radial-node__children">
-                            <span class="radial-child">Course 130mm</span>
-                            <span class="radial-child">Rail + Chariot</span>
-                            <span class="radial-child">Courroie 537mm</span>
-                        </div>
-                    </div>
-
-                    <!-- Branche: Axe 4 (Bas Gauche) -->
-                    <div class="radial-node radial-node--branch radial-node--pos-bl" data-branch="axe4">
-                        <div class="radial-node__content radial-node__content--green">
-                            <span class="radial-node__icon">🟢</span>
-                            <span class="radial-node__title">Axe 4</span>
-                            <span class="radial-node__sub">Pivot Outil</span>
-                        </div>
-                        <div class="radial-node__children">
-                            <span class="radial-child">360°/s</span>
-                            <span class="radial-child">Skilouze</span>
-                            <span class="radial-child">Rozelle</span>
-                        </div>
-                    </div>
-
-                    <!-- Branche: Fabrication (Bas Centre) -->
-                    <div class="radial-node radial-node--branch radial-node--pos-bc" data-branch="fab">
-                        <div class="radial-node__content radial-node__content--red">
-                            <span class="radial-node__icon">🔧</span>
-                            <span class="radial-node__title">Fabrication</span>
-                            <span class="radial-node__sub">Procédés</span>
-                        </div>
-                        <div class="radial-node__children">
-                            <span class="radial-child">Usinage</span>
-                            <span class="radial-child">Découpe Laser</span>
-                            <span class="radial-child">Impression 3D</span>
-                        </div>
-                    </div>
-
-                    <!-- Branche: Étude (Bas Droite) -->
-                    <div class="radial-node radial-node--branch radial-node--pos-br" data-branch="etude">
-                        <div class="radial-node__content radial-node__content--cyan">
-                            <span class="radial-node__icon">📐</span>
-                            <span class="radial-node__title">Étude</span>
-                            <span class="radial-node__sub">Dimensionnement</span>
-                        </div>
-                        <div class="radial-node__children">
-                            <span class="radial-child">PFS</span>
-                            <span class="radial-child">Paliers iglidur®</span>
-                            <span class="radial-child">1,9 MPa</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="explode__rail" aria-hidden="true">
+      <span class="explode__rail-fill"></span>
+      <span class="explode__tick" data-axis="1"><i></i><b>01</b></span>
+      <span class="explode__tick" data-axis="2"><i></i><b>02</b></span>
+      <span class="explode__tick" data-axis="3"><i></i><b>03</b></span>
+      <span class="explode__tick" data-axis="4"><i></i><b>04</b></span>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════
-         MODALE VIDÉO
-         Affiche la vidéo de démonstration en plein écran
-    ═══════════════════════════════════════════════════════════════════ -->
-    <div class="modal" id="video-modal" aria-hidden="true">
-        <div class="modal__overlay" data-close-modal></div>
-        <div class="modal__container modal__container--video">
-            <div class="modal__header">
-                <h2 class="modal__title">Vidéo de démonstration</h2>
-                <button class="modal__close" data-close-modal aria-label="Fermer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                    </svg>
-                </button>
-            </div>
-            <div class="modal__body modal__body--video">
-                <video controls class="modal__video" id="demo-video">
-                    <source src="video-demo.mp4" type="video/mp4">
-                    Votre navigateur ne supporte pas la lecture vidéo.
-                </video>
-            </div>
-        </div>
+    <article class="callout" data-axis="1" aria-labelledby="axe-1">
+      <header class="callout__head"><span>Fiche technique</span><span>Axe 1 / 4</span></header>
+      <div class="callout__id">
+        <p class="callout__num" aria-hidden="true">01</p>
+        <div><h3 class="callout__name" id="axe-1">Pivot bâti / bras</h3>
+        <p class="callout__owner"><span>Responsable</span> Melvin Breton</p></div>
+      </div>
+      <p class="callout__lead">Liaison pivot d’axe vertical (A, z). Moteur NEMA 23 déporté, poulies 16 / 32 dents.</p>
+      <dl class="callout__specs">
+        <div><dt>Rotation</dt><dd>±150°</dd></div>
+        <div><dt>Vitesse max</dt><dd>90°/s</dd></div>
+        <div><dt>Guidage</dt><dd>2 paliers iglidur® Ø12 mm</dd></div>
+        <div><dt>Moteur</dt><dd>NEMA 23</dd></div>
+      </dl>
+      <div class="callout__dim" aria-hidden="true"><i></i><span>A, z</span><i></i></div>
+    </article>
+
+    <article class="callout" data-axis="2" aria-labelledby="axe-2">
+      <header class="callout__head"><span>Fiche technique</span><span>Axe 2 / 4</span></header>
+      <div class="callout__id">
+        <p class="callout__num" aria-hidden="true">02</p>
+        <div><h3 class="callout__name" id="axe-2">Pivot intermédiaire</h3>
+        <p class="callout__owner"><span>Responsable</span> Valentin Caplot</p></div>
+      </div>
+      <p class="callout__lead">Pivot B. Structure hybride : profilé en U en tôle pliée et boîtier imprimé en 3D.</p>
+      <dl class="callout__specs">
+        <div><dt>Rotation</dt><dd>360°</dd></div>
+        <div><dt>Vitesse max</dt><dd>90°/s</dd></div>
+        <div><dt>Entraxe B / glissière</dt><dd>120 mm</dd></div>
+        <div><dt>Charge P2</dt><dd>20 N</dd></div>
+      </dl>
+      <div class="callout__dim" aria-hidden="true"><i></i><span>B</span><i></i></div>
+    </article>
+
+    <article class="callout" data-axis="3" aria-labelledby="axe-3">
+      <header class="callout__head"><span>Fiche technique</span><span>Axe 3 / 4</span></header>
+      <div class="callout__id">
+        <p class="callout__num" aria-hidden="true">03</p>
+        <div><h3 class="callout__name" id="axe-3">Glissière verticale</h3>
+        <p class="callout__owner"><span>Responsable</span> Pacôme Grimaud</p></div>
+      </div>
+      <p class="callout__lead">Trois solutions étudiées (vis sans fin, pignon crémaillère, courroie) : courroie retenue.</p>
+      <dl class="callout__specs">
+        <div><dt>Course</dt><dd>150 mm</dd></div>
+        <div><dt>Vitesse</dt><dd>1 m/s</dd></div>
+        <div><dt>Effort</dt><dd>20 N</dd></div>
+        <div><dt>Courroie</dt><dd>HTD 537 mm</dd></div>
+      </dl>
+      <div class="callout__dim" aria-hidden="true"><i></i><span>150</span><i></i></div>
+    </article>
+
+    <article class="callout" data-axis="4" aria-labelledby="axe-4">
+      <header class="callout__head"><span>Fiche technique</span><span>Axe 4 / 4</span></header>
+      <div class="callout__id">
+        <p class="callout__num" aria-hidden="true">04</p>
+        <div><h3 class="callout__name" id="axe-4">Pivot outil</h3>
+        <p class="callout__owner"><span>Responsable</span> Enzo Lallican</p></div>
+      </div>
+      <p class="callout__lead">Pivot d’axe horizontal (C, x). Pince imprimée sur mesure : sklisen d’un côté, rozelle de l’autre.</p>
+      <dl class="callout__specs">
+        <div><dt>Course</dt><dd>infinie</dd></div>
+        <div><dt>Vitesse</dt><dd>360°/s (1 tr/s)</dd></div>
+        <div><dt>Charge</dt><dd>1 N</dd></div>
+        <div><dt>Courroie</dt><dd>159 mm</dd></div>
+      </dl>
+      <div class="callout__dim" aria-hidden="true"><i></i><span>C, x</span><i></i></div>
+    </article>
+
+    <svg class="explode__leader" aria-hidden="true"><path class="explode__leader-path" d=""/></svg>
+  </div>
+</section>
+
+<!-- 04 CHIFFRES -->
+<section id="chiffres" class="sec numbers" data-theme="dark">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">04 / 14</span><span class="eyebrow__line"></span><span>Chiffres clés</span></p>
+    <h2 class="sec-title" data-reveal>Le projet <em>en chiffres</em></h2>
+    <ul class="stats" data-reveal="stagger">
+      <li class="stat"><span class="stat__idx mono">01</span><span class="stat__num"><span data-count="4">4</span></span><span class="stat__label">Axes motorisés : 3 NEMA 17, 1 NEMA 23</span></li>
+      <li class="stat"><span class="stat__idx mono">02</span><span class="stat__num"><span class="stat__pre">±</span><span data-count="150" data-suffix="°">150°</span></span><span class="stat__label">Rotation du pivot bâti / bras</span></li>
+      <li class="stat"><span class="stat__idx mono">03</span><span class="stat__num"><span data-count="360" data-suffix="°/s">360°/s</span></span><span class="stat__label">Pivot outil à course infinie</span></li>
+      <li class="stat"><span class="stat__idx mono">04</span><span class="stat__num"><span data-count="150" data-suffix=" mm">150 mm</span></span><span class="stat__label">Course de la glissière verticale</span></li>
+      <li class="stat"><span class="stat__idx mono">05</span><span class="stat__num"><span data-count="174.43" data-decimals="2" data-suffix=" €">174,43&nbsp;€</span><small class="stat__unit mono">HT</small></span><span class="stat__label">Composants achetés, 3 factures</span></li>
+      <li class="stat"><span class="stat__idx mono">06</span><span class="stat__num"><span data-count="49" data-suffix=" pages">49 pages</span></span><span class="stat__label">Rapport technique</span></li>
+    </ul>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <ul class="marquee__group"><li>SCARA</li><li>4 axes</li><li>NEMA 17</li><li>NEMA 23</li><li>iglidur®</li><li>TopSolid</li><li>PLA</li><li>Inox 316L</li><li>HTD</li><li>IUT Rennes</li></ul>
+      <ul class="marquee__group"><li>SCARA</li><li>4 axes</li><li>NEMA 17</li><li>NEMA 23</li><li>iglidur®</li><li>TopSolid</li><li>PLA</li><li>Inox 316L</li><li>HTD</li><li>IUT Rennes</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ETUDE -->
+<section id="etude" class="sec study" data-theme="light">
+  <div class="wrap study__grid">
+    <div class="study__intro">
+      <p class="eyebrow" data-reveal><span class="eyebrow__num">05 / 14</span><span class="eyebrow__line"></span><span>Étude</span></p>
+      <h2 class="sec-title" data-reveal>Le pivot A, <em>liaison la plus sollicitée</em></h2>
+      <p class="lead" data-reveal>Le principe fondamental de la statique donne les efforts dans la liaison. Le palier iglidur® A350 Ø12 est ensuite vérifié en vitesse et en pression.</p>
+      <figure class="study__fig" data-reveal>
+        <img src="assets/img/cao-robot-5.webp" alt="Vue CAO de l’axe 1, pivot bâti" width="221" height="598" loading="lazy">
+        <figcaption class="mono">Fig. 01 · Axe 1, vue CAO</figcaption>
+      </figure>
     </div>
 
-    <script src="scripts.js"></script>
+    <article class="sheet" data-reveal>
+      <header class="sheet__head mono"><span>Fiche de calcul</span><span>Pivot A · (A, z)</span></header>
+
+      <section class="step">
+        <h3 class="step__title"><span class="step__n mono">1</span>Principe fondamental de la statique</h3>
+        <div class="eq"><span class="eq__f">Σ<var>F</var><sub>ext</sub> = 0</span></div>
+        <div class="eq"><span class="eq__f"><var>F</var><sub>Y</sub> = <b>136,8</b> N</span></div>
+        <div class="eq"><span class="eq__f"><var>F</var><sub>X</sub> = <b>6,4</b> N</span></div>
+      </section>
+
+      <section class="step">
+        <h3 class="step__title"><span class="step__n mono">2</span>Palier iglidur® A350 Ø12</h3>
+        <div class="eq">
+          <span class="eq__f"><var>v</var> = <b>9,42</b> mm/s &lt; 0,8 m/s</span>
+          <span class="eq__ok mono">Conforme</span>
+          <span class="gauge" style="--v:1.2%"><i></i></span>
+          <span class="gauge__txt mono">1,2 % de la limite</span>
+        </div>
+        <div class="eq">
+          <span class="eq__f"><var>P</var> = <span class="frac"><span><var>F</var></span><span><var>d</var> × <var>L</var></span></span> = <b>1,9</b> MPa &lt; 60 MPa</span>
+          <span class="eq__ok mono">Conforme</span>
+          <span class="gauge" style="--v:3.2%"><i></i></span>
+          <span class="gauge__txt mono">3,2 % de la limite</span>
+        </div>
+      </section>
+    </article>
+  </div>
+</section>
+
+<!-- 06 FABRICATION -->
+<section id="fabrication" class="process" data-theme="light">
+  <div class="process__head">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">06 / 14</span><span class="eyebrow__line"></span><span>Fabrication</span></p>
+    <h2 class="sec-title" data-reveal>De la CAO <em>à la pièce</em></h2>
+  </div>
+  <div class="process__track">
+    <article class="pcard">
+      <p class="pcard__n mono">01</p>
+      <h3>Usinage conventionnel</h3>
+      <p>Axes, contrats de phase, APEF. Tournage pour les gorges d’anneaux élastiques, puis fraisage des perçages et du méplat pour la vis de pression.</p>
+      <ul class="tags mono"><li>Tournage</li><li>Fraisage</li><li>Méplats</li><li>Arbre Ø12 h10</li></ul>
+    </article>
+    <article class="pcard">
+      <p class="pcard__n mono">02</p>
+      <h3>Découpe laser et pliage</h3>
+      <p>Tôles et cales. Profilé en U de l’axe 2 (entraxe de 240 mm dans le déplié), plaque de liaison chariot / courroie de l’axe 3 en inox 316L de 1 mm, cales de tension de l’axe 1.</p>
+      <ul class="tags mono"><li>Tôle 1 mm</li><li>Inox 316L</li><li>Pliage</li><li>Cales</li></ul>
+    </article>
+    <article class="pcard">
+      <p class="pcard__n mono">03</p>
+      <h3>Impression 3D PLA</h3>
+      <p>Boîtiers, supports et pince. Boîtier en U à nervures de renfort pour l’axe 4, adaptateurs de l’axe 3, pince sur mesure.</p>
+      <ul class="tags mono"><li>PLA</li><li>Boîtiers</li><li>Supports</li><li>Pince</li></ul>
+    </article>
+    <article class="pcard pcard--ink">
+      <p class="pcard__n mono">04</p>
+      <h3>Motorisation</h3>
+      <p>4 moteurs : 3 NEMA 17, 1 NEMA 23. Transmission par poulies et courroies sur chaque axe.</p>
+      <dl class="pcard__specs mono">
+        <div><dt>Axe 1</dt><dd>16 / 32 dents</dd></div>
+        <div><dt>Axe 2</dt><dd>16 / 32 · 186 mm</dd></div>
+        <div><dt>Axe 3</dt><dd>HTD 537 mm</dd></div>
+        <div><dt>Axe 4</dt><dd>159 mm</dd></div>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<!-- 07 CAO / REEL -->
+<section id="cao" class="sec cao" data-theme="dark">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">07 / 14</span><span class="eyebrow__line"></span><span>CAO et réel</span></p>
+    <h2 class="sec-title" data-reveal>Du modèle <em>à la machine</em></h2>
+    <p class="lead" data-reveal>Faire glisser pour comparer le modèle TopSolid et le robot fabriqué.</p>
+    <div class="compare" data-cursor="Glisser" data-reveal>
+      <img class="compare__before" src="assets/img/topsolid.webp" alt="Modèle CAO du robot dans TopSolid" width="1922" height="1536" loading="lazy">
+      <div class="compare__after"><img src="assets/img/robot-reel.webp" alt="Photographie du robot CRÊPE fabriqué" width="1024" height="1536" loading="lazy"></div>
+      <span class="compare__tag compare__tag--l mono">Modèle TopSolid</span>
+      <span class="compare__tag compare__tag--r mono">Robot fabriqué</span>
+      <div class="compare__handle" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+      <input class="compare__range" type="range" min="0" max="100" step="0.1" value="50" aria-label="Comparer le modèle CAO et le robot fabriqué">
+    </div>
+  </div>
+</section>
+
+<!-- 08 FILM -->
+<section id="film" class="filmsec" data-theme="dark">
+  <div class="film__head">
+    <p class="eyebrow"><span class="eyebrow__num">08 / 14</span><span class="eyebrow__line"></span><span>Film</span></p>
+    <h2 class="sec-title">La <em>démonstration</em></h2>
+  </div>
+  <div class="film">
+    <video class="film__video" src="assets/media/demo.mp4" poster="assets/img/demo-poster.webp" preload="none" playsinline width="1280" height="720" aria-label="Vidéo de démonstration du robot CRÊPE"></video>
+    <button class="film__play" type="button" data-magnetic data-cursor="Lecture" aria-label="Lire la vidéo de démonstration">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      <span class="film__play-label mono">Lecture</span>
+    </button>
+    <div class="film__bar"><span class="film__bar-fill"></span></div>
+    <span class="film__time mono">00:00 / 05:36</span>
+    <noscript><a class="film__noscript mono" href="assets/media/demo.mp4">Ouvrir la vidéo (5 min 36)</a></noscript>
+  </div>
+</section>
+
+<!-- 09 GALERIE -->
+<section id="galerie" class="sec gallery" data-theme="dark">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">09 / 14</span><span class="eyebrow__line"></span><span>Galerie CAO</span></p>
+    <h2 class="sec-title" data-reveal>Sept vues <em>du modèle</em></h2>
+    <div class="gallery__grid">
+      <figure class="g g7" data-cursor="Agrandir"><img data-lightbox src="assets/img/cao-robot-7.webp" alt="Vue d’ensemble du robot dans TopSolid, pince à gauche" width="1084" height="794" loading="lazy"><figcaption class="mono">Fig. 07 · Vue d’ensemble</figcaption></figure>
+      <figure class="g g3" data-cursor="Agrandir" data-parallax="0.08"><img data-lightbox src="assets/img/cao-robot-3.webp" alt="Glissière verticale de l’axe 3 avec courroie et moteur" width="382" height="612" loading="lazy"><figcaption class="mono">Fig. 03 · Axe 3</figcaption></figure>
+      <figure class="g g5" data-cursor="Agrandir"><img data-lightbox src="assets/img/cao-robot-5.webp" alt="Pivot bâti de l’axe 1 sur son tube" width="221" height="598" loading="lazy"><figcaption class="mono">Fig. 05 · Axe 1</figcaption></figure>
+      <figure class="g g2" data-cursor="Agrandir"><img data-lightbox src="assets/img/cao-robot-2.webp" alt="Boîtier en U et pince de l’axe 4" width="722" height="812" loading="lazy"><figcaption class="mono">Fig. 02 · Axe 4, pince</figcaption></figure>
+      <figure class="g g4" data-cursor="Agrandir" data-parallax="0.06"><img data-lightbox src="assets/img/cao-robot-4.webp" alt="Profilé en U en tôle pliée et boîtier de l’axe 2" width="905" height="628" loading="lazy"><figcaption class="mono">Fig. 04 · Axe 2</figcaption></figure>
+      <figure class="g g6" data-cursor="Agrandir"><img data-lightbox src="assets/img/cao-robot-6.webp" alt="Vue d’ensemble du robot assemblé dans TopSolid" width="969" height="776" loading="lazy"><figcaption class="mono">Fig. 06 · Vue d’ensemble</figcaption></figure>
+      <figure class="g g1" data-cursor="Agrandir"><img data-lightbox src="assets/img/cao-robot-1.webp" alt="Coupe de l’axe 4, pivot outil" width="1272" height="738" loading="lazy"><figcaption class="mono">Fig. 01 · Coupe de l’axe 4</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- 10 EQUIPE -->
+<section id="equipe" class="sec team" data-theme="light">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">10 / 14</span><span class="eyebrow__line"></span><span>Équipe</span></p>
+    <h2 class="sec-title" data-reveal>Quatre ingénieurs, <em>quatre axes</em></h2>
+    <div class="team__grid" data-reveal="stagger">
+      <article class="member"><div class="member__photo"><img src="assets/img/equipe-melvin.webp" alt="Portrait de Melvin Breton" width="900" height="826" loading="lazy"><span class="member__n mono">01</span></div><h3>Melvin Breton</h3><p class="mono">Axe 1 · Pivot bâti / bras</p></article>
+      <article class="member"><div class="member__photo"><img src="assets/img/equipe-valentin.webp" alt="Portrait de Valentin Caplot" width="900" height="965" loading="lazy"><span class="member__n mono">02</span></div><h3>Valentin Caplot</h3><p class="mono">Axe 2 · Pivot intermédiaire</p></article>
+      <article class="member"><div class="member__photo"><img src="assets/img/equipe-pacome.webp" alt="Portrait de Pacôme Grimaud" width="900" height="871" loading="lazy"><span class="member__n mono">03</span></div><h3>Pacôme Grimaud</h3><p class="mono">Axe 3 · Glissière verticale</p></article>
+      <article class="member"><div class="member__photo"><img src="assets/img/equipe-enzo.webp" alt="Portrait d’Enzo Lallican" width="900" height="928" loading="lazy"><span class="member__n mono">04</span></div><h3>Enzo Lallican</h3><p class="mono">Axe 4 · Pivot outil</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- 11 BUDGET -->
+<section id="budget" class="sec budget" data-theme="light">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">11 / 14</span><span class="eyebrow__line"></span><span>Budget</span></p>
+    <h2 class="sec-title" data-reveal>Ce que coûte <em>un robot</em></h2>
+    <div class="budget__grid">
+      <div class="budget__left">
+        <p class="lead" data-reveal>Composants achetés : <b data-count="174.43" data-decimals="2" data-suffix=" €">174,43&nbsp;€</b> HT, en trois factures. La motorisation représente environ 40 %.</p>
+        <div class="tickets" data-reveal="stagger">
+          <div class="ticket-wrap"><div class="ticket"><p class="mono">Facture 01</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">70,00&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
+          <div class="ticket-wrap"><div class="ticket"><p class="mono">Facture 02</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">52,03&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
+          <div class="ticket-wrap"><div class="ticket"><p class="mono">Facture 03</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">52,40&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
+        </div>
+        <p class="budget__sum mono">70,00 + 52,03 + 52,40 = <b>174,43&nbsp;€ HT</b></p>
+        <div class="share" data-reveal><span class="mono">Motorisation · environ 40 %</span><span class="share__bar"><i style="width:40%"></i></span></div>
+      </div>
+
+      <div class="calc" data-reveal>
+        <p class="mono calc__tag">Estimation du coût unitaire</p>
+        <p class="calc__formula"><var>C</var><sub>u</sub> = 200 + 415 + <span class="frac"><span>2&#8239;000</span><span><var>n</var></span></span></p>
+        <div class="calc__qty">
+          <label for="cost-qty">Quantité produite</label>
+          <output id="cost-qty-value" for="cost-qty">1</output>
+        </div>
+        <input id="cost-qty" class="calc__range" type="range" min="1" max="50" step="1" value="1">
+        <dl class="calc__rows">
+          <div><dt>Matière première</dt><dd>200&nbsp;€</dd></div>
+          <div><dt>Coût machine<small>usinage, découpe, impression 3D</small></dt><dd>415&nbsp;€</dd></div>
+          <div><dt>Étude et R&amp;D amortis<small>2&#8239;000 € · 20 h de conception</small></dt><dd id="cost-rd">2&#8239;000&nbsp;€</dd></div>
+        </dl>
+        <p class="calc__res"><span>Coût unitaire</span><strong id="cost-unit">2&#8239;615&nbsp;€</strong></p>
+        <p class="calc__tot mono"><span>Total</span><span id="cost-total">2&#8239;615&nbsp;€</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 ECO -->
+<section id="eco" class="sec eco" data-theme="light">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">12 / 14</span><span class="eyebrow__line"></span><span>Éco-conception</span></p>
+    <h2 class="sec-title" data-reveal>Pensé <em>pour durer</em> et pour être démonté</h2>
+    <div class="eco__grid" data-reveal="stagger">
+      <article class="ecard"><p class="mono">Matériaux</p><p>Structure en tôle acier ou inox 1 mm recyclable. Axes usinés en acier. Boîtiers en PLA : rapide, peu de déchets, mais sensible à la chaleur. Paliers iglidur auto-lubrifiants.</p></article>
+      <article class="ecard"><p class="mono">Conception modulaire</p><p>Chaque axe se démonte indépendamment. Visserie standard, pièces imprimées refaisables.</p></article>
+      <article class="ecard"><p class="mono">Fin de vie</p><p>Démontage sans outil spécial, métaux recyclables, plastiques triés à part.</p></article>
+      <article class="ecard"><p class="mono">Pistes</p><p>Un plastique plus résistant que le PLA, moins d’inox, moins de références de vis.</p></article>
+    </div>
+    <div class="bilan" data-reveal>
+      <p class="mono">Bilan · points forts</p>
+      <ul>
+        <li>Conception robuste et fonctionnelle</li>
+        <li>Démarche méthodique de la conception à la fabrication</li>
+        <li>Matériaux choisis pour le recyclage</li>
+        <li>Documentation technique complète</li>
+        <li>Collaboration efficace</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 13 LIVRABLES -->
+<section id="livrables" class="sec deliv" data-theme="dark">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">13 / 14</span><span class="eyebrow__line"></span><span>Livrables</span></p>
+    <h2 class="sec-title" data-reveal>Tout le <em>dossier</em></h2>
+    <div class="deliv__grid" data-reveal="stagger">
+      <a class="deliverable" href="assets/docs/rapport-technique.pdf" target="_blank" rel="noopener" data-cursor="Ouvrir">
+        <span class="deliverable__visual deliverable__visual--txt"><b>49</b><small class="mono">pages</small></span>
+        <span class="mono deliverable__kind">PDF</span><span class="deliverable__title">Rapport technique</span><span class="deliverable__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="deliverable" href="assets/docs/carte-mentale.png" target="_blank" rel="noopener" data-cursor="Ouvrir">
+        <span class="deliverable__visual"><img src="assets/img/carte-mentale.webp" alt="Aperçu de la carte mentale du projet" width="1600" height="2729" loading="lazy"></span>
+        <span class="mono deliverable__kind">PNG</span><span class="deliverable__title">Carte mentale</span><span class="deliverable__arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="deliverable" href="assets/media/demo.mp4" target="_blank" rel="noopener" data-cursor="Ouvrir">
+        <span class="deliverable__visual"><img src="assets/img/demo-poster.webp" alt="Image extraite de la vidéo de démonstration" width="1280" height="720" loading="lazy"></span>
+        <span class="mono deliverable__kind">Vidéo · 5 min 36</span><span class="deliverable__title">Film de démonstration</span><span class="deliverable__arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 14 PIED DE PAGE -->
+<footer id="contact" class="footer" data-theme="dark">
+  <div class="wrap">
+    <p class="eyebrow"><span class="eyebrow__num">14 / 14</span><span class="eyebrow__line"></span><span>Contact</span></p>
+    <a class="footer__mail" href="mailto:melvin.breton@etudiant.univ-rennes.fr" data-magnetic>melvin.breton@etudiant.univ-rennes.fr</a>
+    <div class="footer__cols">
+      <p>BUT Génie Mécanique et Productique<br>IUT Rennes<br>SAÉ 3.2 · 2025-2026</p>
+      <p>Melvin Breton, Valentin Caplot,<br>Pacôme Grimaud, Enzo Lallican</p>
+      <a class="footer__top mono" href="#hero" data-magnetic>Retour en haut ↑</a>
+    </div>
+  </div>
+  <p class="footer__word" aria-hidden="true">CRÊPE</p>
+</footer>
+
 </body>
-
 </html>
