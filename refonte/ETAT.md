@@ -6,7 +6,5 @@
   carte mentale interactive (`mindmap.js/.css`, section `#carte`), robot pilotable à la souris
   (`robot.js`, `playground.js/.css`, section `#pilotage`), montée en gamme du reste (`index.html`, `main.css`, `main.js`).
   Vérifiée par le parent en 1440 et 390 : zéro erreur console, pas de débordement. Captures PNG des agents gardées en local (ignorées par git).
-- **En ligne sur Vercel depuis le 09/11/2026** : https://robot-crepe-sae.vercel.app (projet `robot-crepe-sae`,
-  équipe `melvinbretonpro-coders-projects`), déployé depuis la branche locale `refonte-premium-v2` par `vercel deploy --prod`.
-  Vercel a relié le dépôt GitHub : un push sur `main` (qui porte encore l'ancien site) redéploierait la production.
-  GitHub Pages sert toujours l'ancien site tant que `main` n'a pas reçu la V2.
+- **En ligne depuis le 09/11/2026** : https://robot-crepe-sae.vercel.app (projet Vercel `robot-crepe-sae`, relié au dépôt :
+  chaque push sur `main` redéploie la production). La V2 est fusionnée dans `main`, GitHub Pages sert aussi la V2.
