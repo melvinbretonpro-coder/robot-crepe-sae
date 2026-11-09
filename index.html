@@ -18,11 +18,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/playground.css">
+<link rel="stylesheet" href="assets/css/mindmap.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
 <script type="module" src="assets/js/main.js"></script>
+<script type="module" src="assets/js/playground.js"></script>
+<script type="module" src="assets/js/mindmap.js"></script>
 </head>
 <body>
 <a class="skip" href="#manifeste">Aller au contenu</a>
@@ -45,15 +49,63 @@
     <a class="nav__brand" href="#hero">Robot CRÊPE</a>
     <nav class="nav__links" aria-label="Navigation principale">
       <a href="#decomposition">Décomposition</a>
+      <a href="#pilotage">Pilotage</a>
+      <a href="#carte">Carte</a>
       <a href="#etude">Étude</a>
       <a href="#fabrication">Fabrication</a>
       <a href="#equipe">Équipe</a>
       <a href="#budget">Budget</a>
     </nav>
     <a class="nav__cta" href="#livrables" data-magnetic>Livrables</a>
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu"><span></span><span></span></button>
     <span class="nav__progress"></span>
   </div>
 </header>
+
+<!-- Menu plein écran (mobile) -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Sommaire" inert>
+  <ol class="menu__list">
+    <li><a href="#hero"><b>01</b><span>Accueil</span></a></li>
+    <li><a href="#manifeste"><b>02</b><span>Manifeste</span></a></li>
+    <li><a href="#decomposition"><b>03</b><span>Décomposition</span></a></li>
+    <li><a href="#pilotage"><b>04</b><span>Pilotage</span></a></li>
+    <li><a href="#chiffres"><b>05</b><span>Chiffres clés</span></a></li>
+    <li><a href="#carte"><b>06</b><span>Carte mentale</span></a></li>
+    <li><a href="#etude"><b>07</b><span>Étude</span></a></li>
+    <li><a href="#fabrication"><b>08</b><span>Fabrication</span></a></li>
+    <li><a href="#cao"><b>09</b><span>CAO et réel</span></a></li>
+    <li><a href="#film"><b>10</b><span>Film</span></a></li>
+    <li><a href="#galerie"><b>11</b><span>Galerie CAO</span></a></li>
+    <li><a href="#equipe"><b>12</b><span>Équipe</span></a></li>
+    <li><a href="#budget"><b>13</b><span>Budget</span></a></li>
+    <li><a href="#eco"><b>14</b><span>Éco-conception</span></a></li>
+    <li><a href="#livrables"><b>15</b><span>Livrables</span></a></li>
+    <li><a href="#contact"><b>16</b><span>Contact</span></a></li>
+  </ol>
+  <p class="menu__foot mono">SAÉ 3.2 · BUT GMP · IUT Rennes · 2025-2026</p>
+</div>
+
+<!-- Rail de chapitres (desktop) -->
+<nav class="rail" aria-label="Chapitres de la page">
+  <ol>
+    <li><a href="#hero" data-label="Accueil"><span class="rail__name mono"><b>01</b>Accueil</span><i></i></a></li>
+    <li><a href="#manifeste" data-label="Manifeste"><span class="rail__name mono"><b>02</b>Manifeste</span><i></i></a></li>
+    <li><a href="#decomposition" data-label="Décomposition"><span class="rail__name mono"><b>03</b>Décomposition</span><i></i></a></li>
+    <li><a href="#pilotage" data-label="Pilotage"><span class="rail__name mono"><b>04</b>Pilotage</span><i></i></a></li>
+    <li><a href="#chiffres" data-label="Chiffres clés"><span class="rail__name mono"><b>05</b>Chiffres clés</span><i></i></a></li>
+    <li><a href="#carte" data-label="Carte mentale"><span class="rail__name mono"><b>06</b>Carte mentale</span><i></i></a></li>
+    <li><a href="#etude" data-label="Étude"><span class="rail__name mono"><b>07</b>Étude</span><i></i></a></li>
+    <li><a href="#fabrication" data-label="Fabrication"><span class="rail__name mono"><b>08</b>Fabrication</span><i></i></a></li>
+    <li><a href="#cao" data-label="CAO et réel"><span class="rail__name mono"><b>09</b>CAO et réel</span><i></i></a></li>
+    <li><a href="#film" data-label="Film"><span class="rail__name mono"><b>10</b>Film</span><i></i></a></li>
+    <li><a href="#galerie" data-label="Galerie CAO"><span class="rail__name mono"><b>11</b>Galerie CAO</span><i></i></a></li>
+    <li><a href="#equipe" data-label="Équipe"><span class="rail__name mono"><b>12</b>Équipe</span><i></i></a></li>
+    <li><a href="#budget" data-label="Budget"><span class="rail__name mono"><b>13</b>Budget</span><i></i></a></li>
+    <li><a href="#eco" data-label="Éco-conception"><span class="rail__name mono"><b>14</b>Éco-conception</span><i></i></a></li>
+    <li><a href="#livrables" data-label="Livrables"><span class="rail__name mono"><b>15</b>Livrables</span><i></i></a></li>
+    <li><a href="#contact" data-label="Contact"><span class="rail__name mono"><b>16</b>Contact</span><i></i></a></li>
+  </ol>
+</nav>
 
 <main>
 
@@ -67,15 +119,15 @@
     <span class="hero__crepe" data-split="chars">CRÊPE</span>
   </h1>
   <div class="hero__foot">
-    <p class="hero__lede">Robot SCARA à quatre axes qui retourne des crêpes.</p>
-    <a class="hero__scroll mono" href="#manifeste"><span>Défiler</span><i aria-hidden="true"></i></a>
+    <p class="hero__lede" data-split="words">Robot SCARA à quatre axes qui retourne des crêpes.</p>
+    <a class="hero__scroll mono" href="#manifeste" data-cursor="Descendre"><span>Faire défiler</span><i aria-hidden="true"></i></a>
   </div>
 </section>
 
 <!-- 02 MANIFESTE -->
 <section id="manifeste" class="sec manifest" data-theme="dark">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">02 / 14</span><span class="eyebrow__line"></span><span>Manifeste</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">02 / 16</span><span class="eyebrow__line"></span><span>Manifeste</span></p>
     <div class="manifest__lines">
       <p class="manifest__line" data-split="words">Quatre axes.</p>
       <p class="manifest__line" data-split="words">Quatre ingénieurs.</p>
@@ -91,7 +143,7 @@
 <section id="decomposition" class="explode" data-theme="dark" aria-label="Vue éclatée du robot">
   <div class="explode__pin">
     <div class="explode__intro">
-      <p class="eyebrow"><span class="eyebrow__num">03 / 14</span><span class="eyebrow__line"></span><span>Décomposition</span></p>
+      <p class="eyebrow"><span class="eyebrow__num">03 / 16</span><span class="eyebrow__line"></span><span>Décomposition</span></p>
       <h2 class="explode__title">Vue <em>éclatée</em></h2>
       <p class="explode__sub">Le robot se décompose en quatre axes. Chacun est mis en valeur, puis l’ensemble se réassemble.</p>
     </div>
@@ -176,18 +228,27 @@
   </div>
 </section>
 
+<!-- PILOTAGE (propriété : agent 3D, playground.js / playground.css) -->
+<section id="pilotage" class="sec play" data-theme="dark" aria-label="Pilotez le robot">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">04 / 16</span><span class="eyebrow__line"></span><span>Pilotage</span></p>
+    <h2 class="sec-title" data-reveal>À vous de <em>le piloter</em></h2>
+  </div>
+  <div class="play-root" data-lenis-prevent></div>
+</section>
+
 <!-- 04 CHIFFRES -->
 <section id="chiffres" class="sec numbers" data-theme="dark">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">04 / 14</span><span class="eyebrow__line"></span><span>Chiffres clés</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">05 / 16</span><span class="eyebrow__line"></span><span>Chiffres clés</span></p>
     <h2 class="sec-title" data-reveal>Le projet <em>en chiffres</em></h2>
     <ul class="stats" data-reveal="stagger">
-      <li class="stat"><span class="stat__idx mono">01</span><span class="stat__num"><span data-count="4">4</span></span><span class="stat__label">Axes motorisés : 3 NEMA 17, 1 NEMA 23</span></li>
-      <li class="stat"><span class="stat__idx mono">02</span><span class="stat__num"><span class="stat__pre">±</span><span data-count="150" data-suffix="°">150°</span></span><span class="stat__label">Rotation du pivot bâti / bras</span></li>
-      <li class="stat"><span class="stat__idx mono">03</span><span class="stat__num"><span data-count="360" data-suffix="°/s">360°/s</span></span><span class="stat__label">Pivot outil à course infinie</span></li>
-      <li class="stat"><span class="stat__idx mono">04</span><span class="stat__num"><span data-count="150" data-suffix=" mm">150 mm</span></span><span class="stat__label">Course de la glissière verticale</span></li>
-      <li class="stat"><span class="stat__idx mono">05</span><span class="stat__num"><span data-count="174.43" data-decimals="2" data-suffix=" €">174,43&nbsp;€</span><small class="stat__unit mono">HT</small></span><span class="stat__label">Composants achetés, 3 factures</span></li>
-      <li class="stat"><span class="stat__idx mono">06</span><span class="stat__num"><span data-count="49" data-suffix=" pages">49 pages</span></span><span class="stat__label">Rapport technique</span></li>
+      <li class="stat" data-halo><span class="stat__idx mono">01</span><span class="stat__num"><span data-count="4">4</span></span><span class="stat__label">Axes motorisés : 3 NEMA 17, 1 NEMA 23</span></li>
+      <li class="stat" data-halo><span class="stat__idx mono">02</span><span class="stat__num"><span class="stat__pre">±</span><span data-count="150" data-suffix="°">150°</span></span><span class="stat__label">Rotation du pivot bâti / bras</span></li>
+      <li class="stat" data-halo><span class="stat__idx mono">03</span><span class="stat__num"><span data-count="360" data-suffix="°/s">360°/s</span></span><span class="stat__label">Pivot outil à course infinie</span></li>
+      <li class="stat" data-halo><span class="stat__idx mono">04</span><span class="stat__num"><span data-count="150" data-suffix=" mm">150 mm</span></span><span class="stat__label">Course de la glissière verticale</span></li>
+      <li class="stat" data-halo><span class="stat__idx mono">05</span><span class="stat__num"><span data-count="174.43" data-decimals="2" data-suffix=" €">174,43&nbsp;€</span><small class="stat__unit mono">HT</small></span><span class="stat__label">Composants achetés, 3 factures</span></li>
+      <li class="stat" data-halo><span class="stat__idx mono">06</span><span class="stat__num"><span data-count="49" data-suffix=" pages">49 pages</span></span><span class="stat__label">Rapport technique</span></li>
     </ul>
   </div>
   <div class="marquee" aria-hidden="true">
@@ -198,11 +259,20 @@
   </div>
 </section>
 
+<!-- CARTE MENTALE (propriété : agent carte, mindmap.js / mindmap.css) -->
+<section id="carte" class="sec mindmap" data-theme="dark" aria-label="Carte mentale du projet">
+  <div class="wrap">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">06 / 16</span><span class="eyebrow__line"></span><span>Carte mentale</span></p>
+    <h2 class="sec-title" data-reveal>Le projet <em>en une carte</em></h2>
+  </div>
+  <div class="mindmap-root" data-lenis-prevent></div>
+</section>
+
 <!-- 05 ETUDE -->
 <section id="etude" class="sec study" data-theme="light">
   <div class="wrap study__grid">
     <div class="study__intro">
-      <p class="eyebrow" data-reveal><span class="eyebrow__num">05 / 14</span><span class="eyebrow__line"></span><span>Étude</span></p>
+      <p class="eyebrow" data-reveal><span class="eyebrow__num">07 / 16</span><span class="eyebrow__line"></span><span>Étude</span></p>
       <h2 class="sec-title" data-reveal>Le pivot A, <em>liaison la plus sollicitée</em></h2>
       <p class="lead" data-reveal>Le principe fondamental de la statique donne les efforts dans la liaison. Le palier iglidur® A350 Ø12 est ensuite vérifié en vitesse et en pression.</p>
       <figure class="study__fig" data-reveal>
@@ -243,7 +313,7 @@
 <!-- 06 FABRICATION -->
 <section id="fabrication" class="process" data-theme="light">
   <div class="process__head">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">06 / 14</span><span class="eyebrow__line"></span><span>Fabrication</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">08 / 16</span><span class="eyebrow__line"></span><span>Fabrication</span></p>
     <h2 class="sec-title" data-reveal>De la CAO <em>à la pièce</em></h2>
   </div>
   <div class="process__track">
@@ -281,10 +351,12 @@
 
 <!-- 07 CAO / REEL -->
 <section id="cao" class="sec cao" data-theme="dark">
-  <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">07 / 14</span><span class="eyebrow__line"></span><span>CAO et réel</span></p>
-    <h2 class="sec-title" data-reveal>Du modèle <em>à la machine</em></h2>
-    <p class="lead" data-reveal>Faire glisser pour comparer le modèle TopSolid et le robot fabriqué.</p>
+  <div class="wrap cao__grid">
+    <div class="cao__intro">
+      <p class="eyebrow" data-reveal><span class="eyebrow__num">09 / 16</span><span class="eyebrow__line"></span><span>CAO et réel</span></p>
+      <h2 class="sec-title" data-reveal>Du modèle <em>à la machine</em></h2>
+      <p class="lead" data-reveal>Faire glisser, ou utiliser les flèches du clavier, pour comparer le modèle TopSolid et le robot fabriqué.</p>
+    </div>
     <div class="compare" data-cursor="Glisser" data-reveal>
       <img class="compare__before" src="assets/img/topsolid.webp" alt="Modèle CAO du robot dans TopSolid" width="1922" height="1536" loading="lazy">
       <div class="compare__after"><img src="assets/img/robot-reel.webp" alt="Photographie du robot CRÊPE fabriqué" width="1024" height="1536" loading="lazy"></div>
@@ -299,7 +371,7 @@
 <!-- 08 FILM -->
 <section id="film" class="filmsec" data-theme="dark">
   <div class="film__head">
-    <p class="eyebrow"><span class="eyebrow__num">08 / 14</span><span class="eyebrow__line"></span><span>Film</span></p>
+    <p class="eyebrow"><span class="eyebrow__num">10 / 16</span><span class="eyebrow__line"></span><span>Film</span></p>
     <h2 class="sec-title">La <em>démonstration</em></h2>
   </div>
   <div class="film">
@@ -317,7 +389,7 @@
 <!-- 09 GALERIE -->
 <section id="galerie" class="sec gallery" data-theme="dark">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">09 / 14</span><span class="eyebrow__line"></span><span>Galerie CAO</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">11 / 16</span><span class="eyebrow__line"></span><span>Galerie CAO</span></p>
     <h2 class="sec-title" data-reveal>Sept vues <em>du modèle</em></h2>
     <div class="gallery__grid">
       <figure class="g g7" data-cursor="Agrandir"><img data-lightbox src="assets/img/cao-robot-7.webp" alt="Vue d’ensemble du robot dans TopSolid, pince à gauche" width="1084" height="794" loading="lazy"><figcaption class="mono">Fig. 07 · Vue d’ensemble</figcaption></figure>
@@ -334,13 +406,73 @@
 <!-- 10 EQUIPE -->
 <section id="equipe" class="sec team" data-theme="light">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">10 / 14</span><span class="eyebrow__line"></span><span>Équipe</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">12 / 16</span><span class="eyebrow__line"></span><span>Équipe</span></p>
     <h2 class="sec-title" data-reveal>Quatre ingénieurs, <em>quatre axes</em></h2>
     <div class="team__grid" data-reveal="stagger">
-      <article class="member"><div class="member__photo"><img src="assets/img/equipe-melvin.webp" alt="Portrait de Melvin Breton" width="900" height="826" loading="lazy"><span class="member__n mono">01</span></div><h3>Melvin Breton</h3><p class="mono">Axe 1 · Pivot bâti / bras</p></article>
-      <article class="member"><div class="member__photo"><img src="assets/img/equipe-valentin.webp" alt="Portrait de Valentin Caplot" width="900" height="965" loading="lazy"><span class="member__n mono">02</span></div><h3>Valentin Caplot</h3><p class="mono">Axe 2 · Pivot intermédiaire</p></article>
-      <article class="member"><div class="member__photo"><img src="assets/img/equipe-pacome.webp" alt="Portrait de Pacôme Grimaud" width="900" height="871" loading="lazy"><span class="member__n mono">03</span></div><h3>Pacôme Grimaud</h3><p class="mono">Axe 3 · Glissière verticale</p></article>
-      <article class="member"><div class="member__photo"><img src="assets/img/equipe-enzo.webp" alt="Portrait d’Enzo Lallican" width="900" height="928" loading="lazy"><span class="member__n mono">04</span></div><h3>Enzo Lallican</h3><p class="mono">Axe 4 · Pivot outil</p></article>
+      <article class="member" data-axis="1">
+        <div class="member__photo">
+          <img src="assets/img/equipe-melvin.webp" alt="Portrait de Melvin Breton" width="900" height="826" loading="lazy"><span class="member__n mono">01</span>
+          <button class="member__plus" type="button" aria-expanded="false" aria-label="Afficher la fiche de l’axe 1"><i aria-hidden="true"></i></button>
+          <div class="member__sheet" data-cursor="">
+            <p class="member__kicker mono">Axe 1 · Fiche</p>
+            <p class="member__lead">Moteur NEMA 23 déporté, poulies 16 / 32 dents.</p>
+            <dl class="member__stats">
+              <div><dt>Rotation</dt><dd>±150°</dd></div>
+              <div><dt>Vitesse max</dt><dd>90°/s</dd></div>
+            </dl>
+            <button class="member__go" type="button" data-axis="1">Voir son axe<span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <h3>Melvin Breton</h3><p class="mono">Axe 1 · Pivot bâti / bras</p>
+      </article>
+      <article class="member" data-axis="2">
+        <div class="member__photo">
+          <img src="assets/img/equipe-valentin.webp" alt="Portrait de Valentin Caplot" width="900" height="965" loading="lazy"><span class="member__n mono">02</span>
+          <button class="member__plus" type="button" aria-expanded="false" aria-label="Afficher la fiche de l’axe 2"><i aria-hidden="true"></i></button>
+          <div class="member__sheet" data-cursor="">
+            <p class="member__kicker mono">Axe 2 · Fiche</p>
+            <p class="member__lead">Profilé en U en tôle pliée et boîtier imprimé en 3D.</p>
+            <dl class="member__stats">
+              <div><dt>Rotation</dt><dd>360°</dd></div>
+              <div><dt>Entraxe B / glissière</dt><dd>120 mm</dd></div>
+            </dl>
+            <button class="member__go" type="button" data-axis="2">Voir son axe<span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <h3>Valentin Caplot</h3><p class="mono">Axe 2 · Pivot intermédiaire</p>
+      </article>
+      <article class="member" data-axis="3">
+        <div class="member__photo">
+          <img src="assets/img/equipe-pacome.webp" alt="Portrait de Pacôme Grimaud" width="900" height="871" loading="lazy"><span class="member__n mono">03</span>
+          <button class="member__plus" type="button" aria-expanded="false" aria-label="Afficher la fiche de l’axe 3"><i aria-hidden="true"></i></button>
+          <div class="member__sheet" data-cursor="">
+            <p class="member__kicker mono">Axe 3 · Fiche</p>
+            <p class="member__lead">Courroie retenue parmi trois solutions, rail et chariot.</p>
+            <dl class="member__stats">
+              <div><dt>Course</dt><dd>150 mm</dd></div>
+              <div><dt>Vitesse</dt><dd>1 m/s</dd></div>
+            </dl>
+            <button class="member__go" type="button" data-axis="3">Voir son axe<span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <h3>Pacôme Grimaud</h3><p class="mono">Axe 3 · Glissière verticale</p>
+      </article>
+      <article class="member" data-axis="4">
+        <div class="member__photo">
+          <img src="assets/img/equipe-enzo.webp" alt="Portrait d’Enzo Lallican" width="900" height="928" loading="lazy"><span class="member__n mono">04</span>
+          <button class="member__plus" type="button" aria-expanded="false" aria-label="Afficher la fiche de l’axe 4"><i aria-hidden="true"></i></button>
+          <div class="member__sheet" data-cursor="">
+            <p class="member__kicker mono">Axe 4 · Fiche</p>
+            <p class="member__lead">Pince imprimée sur mesure : sklisen et rozelle.</p>
+            <dl class="member__stats">
+              <div><dt>Vitesse</dt><dd>360°/s</dd></div>
+              <div><dt>Charge</dt><dd>1 N</dd></div>
+            </dl>
+            <button class="member__go" type="button" data-axis="4">Voir son axe<span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <h3>Enzo Lallican</h3><p class="mono">Axe 4 · Pivot outil</p>
+      </article>
     </div>
   </div>
 </section>
@@ -348,18 +480,42 @@
 <!-- 11 BUDGET -->
 <section id="budget" class="sec budget" data-theme="light">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">11 / 14</span><span class="eyebrow__line"></span><span>Budget</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">13 / 16</span><span class="eyebrow__line"></span><span>Budget</span></p>
     <h2 class="sec-title" data-reveal>Ce que coûte <em>un robot</em></h2>
     <div class="budget__grid">
       <div class="budget__left">
         <p class="lead" data-reveal>Composants achetés : <b data-count="174.43" data-decimals="2" data-suffix=" €">174,43&nbsp;€</b> HT, en trois factures. La motorisation représente environ 40&nbsp;%.</p>
         <div class="tickets" data-reveal="stagger">
-          <div class="ticket-wrap"><div class="ticket"><p class="mono">Facture 01</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">70,00&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
-          <div class="ticket-wrap"><div class="ticket"><p class="mono">Facture 02</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">52,03&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
-          <div class="ticket-wrap"><div class="ticket"><p class="mono">Facture 03</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">52,40&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
+          <div class="ticket-wrap" data-i="0"><div class="ticket"><p class="mono">Facture 01</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">70,00&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
+          <div class="ticket-wrap" data-i="1"><div class="ticket"><p class="mono">Facture 02</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">52,03&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
+          <div class="ticket-wrap" data-i="2"><div class="ticket"><p class="mono">Facture 03</p><p class="ticket__l">Boutique de l’IUT</p><p class="ticket__amt">52,40&nbsp;€</p><i class="barcode" aria-hidden="true"></i></div></div>
         </div>
         <p class="budget__sum mono">70,00 + 52,03 + 52,40 = <b>174,43&nbsp;€ HT</b></p>
-        <div class="share" data-reveal><span class="mono">Motorisation · environ 40&nbsp;%</span><span class="share__bar"><i style="width:40%"></i></span></div>
+        <figure class="spend" data-reveal>
+          <div class="spend__chart">
+            <svg viewBox="0 0 220 220" role="img" aria-label="Anneau de répartition des 174,43 € HT entre les trois factures, avec en anneau extérieur la part de la motorisation, environ 40 %">
+              <g transform="rotate(-90 110 110)" fill="none">
+                <circle class="spend__track" cx="110" cy="110" r="72" stroke-width="22"/>
+                <circle class="spend__seg" data-i="0" cx="110" cy="110" r="72" stroke-width="22" pathLength="100" stroke-dasharray="39.3 60.7" stroke-dashoffset="-0.4"/>
+                <circle class="spend__seg" data-i="1" cx="110" cy="110" r="72" stroke-width="22" pathLength="100" stroke-dasharray="29 71" stroke-dashoffset="-40.5"/>
+                <circle class="spend__seg" data-i="2" cx="110" cy="110" r="72" stroke-width="22" pathLength="100" stroke-dasharray="29.2 70.8" stroke-dashoffset="-70.4"/>
+                <circle class="spend__ring-track" cx="110" cy="110" r="97" stroke-width="2"/>
+                <circle class="spend__ring" data-i="m" cx="110" cy="110" r="97" stroke-width="4" pathLength="100" stroke-dasharray="40 60"/>
+              </g>
+            </svg>
+            <div class="spend__center" aria-live="polite">
+              <span class="spend__k mono">Total</span>
+              <strong class="spend__v">174,43&nbsp;€</strong>
+              <span class="spend__s mono">HT · 3 factures</span>
+            </div>
+          </div>
+          <ul class="spend__legend">
+            <li><button class="spend__row" type="button" data-i="0" data-v="70,00 €" data-p="40,1 %" data-k="Facture 01"><i class="spend__sw spend__sw--0"></i><span>Facture 01</span><b>70,00&nbsp;€</b><em class="mono">40,1&nbsp;%</em></button></li>
+            <li><button class="spend__row" type="button" data-i="1" data-v="52,03 €" data-p="29,8 %" data-k="Facture 02"><i class="spend__sw spend__sw--1"></i><span>Facture 02</span><b>52,03&nbsp;€</b><em class="mono">29,8&nbsp;%</em></button></li>
+            <li><button class="spend__row" type="button" data-i="2" data-v="52,40 €" data-p="30,0 %" data-k="Facture 03"><i class="spend__sw spend__sw--2"></i><span>Facture 03</span><b>52,40&nbsp;€</b><em class="mono">30,0&nbsp;%</em></button></li>
+            <li><button class="spend__row spend__row--m" type="button" data-i="m" data-v="environ 40 %" data-p="du budget" data-k="Motorisation"><i class="spend__sw spend__sw--m"></i><span>Motorisation</span><b>environ</b><em class="mono">40&nbsp;%</em></button></li>
+          </ul>
+        </figure>
       </div>
 
       <div class="calc" data-reveal>
@@ -370,6 +526,10 @@
           <output id="cost-qty-value" for="cost-qty">1</output>
         </div>
         <input id="cost-qty" class="calc__range" type="range" min="1" max="50" step="1" value="1">
+        <figure class="calc__chart">
+          <svg viewBox="0 0 360 172" role="img" aria-label="Courbe du coût unitaire en fonction de la quantité produite, de 1 à 50 unités : de 2 615 € pour une unité vers un plancher de 615 €"></svg>
+          <figcaption class="mono">Coût unitaire selon la quantité <var>n</var></figcaption>
+        </figure>
         <dl class="calc__rows">
           <div><dt>Matière première</dt><dd>200&nbsp;€</dd></div>
           <div><dt>Coût machine<small>usinage, découpe, impression 3D</small></dt><dd>415&nbsp;€</dd></div>
@@ -385,13 +545,13 @@
 <!-- 12 ECO -->
 <section id="eco" class="sec eco" data-theme="light">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">12 / 14</span><span class="eyebrow__line"></span><span>Éco-conception</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">14 / 16</span><span class="eyebrow__line"></span><span>Éco-conception</span></p>
     <h2 class="sec-title" data-reveal>Pensé <em>pour durer</em> et pour être démonté</h2>
     <div class="eco__grid" data-reveal="stagger">
-      <article class="ecard"><p class="mono">Matériaux</p><p>Structure en tôle acier ou inox 1 mm recyclable. Axes usinés en acier. Boîtiers en PLA : rapide, peu de déchets, mais sensible à la chaleur. Paliers iglidur auto-lubrifiants.</p></article>
-      <article class="ecard"><p class="mono">Conception modulaire</p><p>Chaque axe se démonte indépendamment. Visserie standard, pièces imprimées refaisables.</p></article>
-      <article class="ecard"><p class="mono">Fin de vie</p><p>Démontage sans outil spécial, métaux recyclables, plastiques triés à part.</p></article>
-      <article class="ecard"><p class="mono">Pistes</p><p>Un plastique plus résistant que le PLA, moins d’inox, moins de références de vis.</p></article>
+      <article class="ecard" data-tilt data-halo><p class="mono">Matériaux</p><p>Structure en tôle acier ou inox 1 mm recyclable. Axes usinés en acier. Boîtiers en PLA : rapide, peu de déchets, mais sensible à la chaleur. Paliers iglidur auto-lubrifiants.</p></article>
+      <article class="ecard" data-tilt data-halo><p class="mono">Conception modulaire</p><p>Chaque axe se démonte indépendamment. Visserie standard, pièces imprimées refaisables.</p></article>
+      <article class="ecard" data-tilt data-halo><p class="mono">Fin de vie</p><p>Démontage sans outil spécial, métaux recyclables, plastiques triés à part.</p></article>
+      <article class="ecard" data-tilt data-halo><p class="mono">Pistes</p><p>Un plastique plus résistant que le PLA, moins d’inox, moins de références de vis.</p></article>
     </div>
     <div class="bilan" data-reveal>
       <p class="mono">Bilan · points forts</p>
@@ -409,17 +569,20 @@
 <!-- 13 LIVRABLES -->
 <section id="livrables" class="sec deliv" data-theme="dark">
   <div class="wrap">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">13 / 14</span><span class="eyebrow__line"></span><span>Livrables</span></p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">15 / 16</span><span class="eyebrow__line"></span><span>Livrables</span></p>
     <h2 class="sec-title" data-reveal>Tout le <em>dossier</em></h2>
     <div class="deliv__grid" data-reveal="stagger">
       <a class="deliverable" href="assets/docs/rapport-technique.pdf" target="_blank" rel="noopener" data-cursor="Ouvrir">
         <span class="deliverable__visual deliverable__visual--txt"><b>49</b><small class="mono">pages</small></span>
         <span class="mono deliverable__kind">PDF</span><span class="deliverable__title">Rapport technique</span><span class="deliverable__arrow" aria-hidden="true">↗</span>
       </a>
-      <a class="deliverable" href="assets/docs/carte-mentale.png" target="_blank" rel="noopener" data-cursor="Ouvrir">
-        <span class="deliverable__visual"><img src="assets/img/carte-mentale.webp" alt="Aperçu de la carte mentale du projet" width="1600" height="2729" loading="lazy"></span>
-        <span class="mono deliverable__kind">PNG</span><span class="deliverable__title">Carte mentale</span><span class="deliverable__arrow" aria-hidden="true">↗</span>
-      </a>
+      <div class="deliverable-cell">
+        <a class="deliverable" href="#carte" data-cursor="Explorer">
+          <span class="deliverable__visual"><img src="assets/img/carte-mentale.webp" alt="Aperçu de la carte mentale du projet" width="1600" height="2729" loading="lazy"></span>
+          <span class="mono deliverable__kind">Interactive</span><span class="deliverable__title">Carte mentale</span><span class="deliverable__arrow" aria-hidden="true">↓</span>
+        </a>
+        <a class="deliverable__alt mono" href="assets/docs/carte-mentale.png" target="_blank" rel="noopener" download>Télécharger l’image</a>
+      </div>
       <a class="deliverable" href="assets/media/demo.mp4" target="_blank" rel="noopener" data-cursor="Ouvrir">
         <span class="deliverable__visual"><img src="assets/img/demo-poster.webp" alt="Image extraite de la vidéo de démonstration" width="1280" height="720" loading="lazy"></span>
         <span class="mono deliverable__kind">Vidéo · 5 min 36</span><span class="deliverable__title">Film de démonstration</span><span class="deliverable__arrow" aria-hidden="true">↗</span>
@@ -433,7 +596,7 @@
 <!-- 14 PIED DE PAGE -->
 <footer id="contact" class="footer" data-theme="dark">
   <div class="wrap">
-    <p class="eyebrow"><span class="eyebrow__num">14 / 14</span><span class="eyebrow__line"></span><span>Contact</span></p>
+    <p class="eyebrow"><span class="eyebrow__num">16 / 16</span><span class="eyebrow__line"></span><span>Contact</span></p>
     <a class="footer__mail" href="mailto:melvin.breton@etudiant.univ-rennes.fr" data-magnetic>melvin.breton@etudiant.univ-rennes.fr</a>
     <div class="footer__cols">
       <p>BUT Génie Mécanique et Productique<br>IUT Rennes<br>SAÉ 3.2 · 2025-2026</p>

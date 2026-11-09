@@ -1,4 +1,8 @@
-// Robot CRÊPE : modèle SCARA 4 axes procédural, vue éclatée pilotée par le scroll.
+// Robot CRÊPE : modèle SCARA 4 axes procédural.
+// - buildRobotModel() : géométries, matériaux, articulations (réutilisable, une instance par scène)
+// - setupStudio() / makeRenderer() : rendu et éclairage premium communs
+// - createRobot() : version hero / vue éclatée pilotée par le scroll (API figée avec main.js)
+// - KIN : constantes de cinématique partagées avec le poste de pilotage (playground.js)
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
@@ -13,16 +17,34 @@ export const PHASES = {
   assemble: [0.92, 1.0],
 };
 
-const ACCENT = new THREE.Color(0xe3a857);
-const WHITE = new THREE.Color(0xf3eee6);
-const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
-const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
-const lerp = (a, b, t) => a + (b - a) * t;
+// 1 unité = 100 mm. Le point outil est le centre de la spatule (sklisen).
+export const KIN = {
+  L1: 3.05, // entraxe pivot A / pivot B
+  TOOL: [4.4, 0.42], // centre de la spatule dans le repère de l'axe 2 (x le long du bras, z latéral)
+  J1_Y: 5.55, // hauteur du pivot A
+  A3_Y: -0.6, // décalage vertical de la glissière dans le repère de l'axe 2
+  TOOL_DY: -0.1, // décalage vertical du pivot outil par rapport au chariot
+  J3_MIN: -2.4, // chariot en bas de course
+  J3_MAX: -0.9, // chariot en haut de course (150 mm)
+  LIM1: (150 * Math.PI) / 180,
+};
+// hauteur monde de la spatule quand le chariot est à la cote y (repère glissière)
+export const toolWorldY = (j3y) => KIN.J1_Y + KIN.A3_Y + j3y + KIN.TOOL_DY;
 
-export function createRobot(canvas, opts = {}) {
+export const ACCENT = new THREE.Color(0xe3a857);
+export const WHITE = new THREE.Color(0xf3eee6);
+export const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+export const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+export const lerp = (a, b, t) => a + (b - a) * t;
+const wrapPI = (a) => { a = (a + Math.PI) % (2 * Math.PI); if (a < 0) a += 2 * Math.PI; return a - Math.PI; };
+
+export function hasWebGL() {
   const test = document.createElement('canvas');
-  if (!(test.getContext('webgl2') || test.getContext('webgl'))) throw new Error('WebGL indisponible');
+  return !!(test.getContext('webgl2') || test.getContext('webgl'));
+}
 
+export function makeRenderer(canvas, opts = {}) {
+  if (!hasWebGL()) throw new Error('WebGL indisponible');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: !!opts.preserve });
   renderer.setClearColor(0x000000, 0);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -30,20 +52,20 @@ export function createRobot(canvas, opts = {}) {
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  return renderer;
+}
 
-  const scene = new THREE.Scene();
+// Éclairage premium : clé chaude, contre-jour froid, remplissage doux, environnement studio
+export function setupStudio(renderer, scene, o = {}) {
+  const ext = o.extent ?? 9;
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
   scene.environmentIntensity = 0.75;
-
-  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
-
-  // Lumières : clé chaude, contre-jour froid, remplissage doux
   const key = new THREE.DirectionalLight(0xffe0b8, 2.4);
   key.position.set(7, 12, 8);
   key.castShadow = true;
-  key.shadow.mapSize.set(2048, 2048);
-  Object.assign(key.shadow.camera, { left: -9, right: 9, top: 9, bottom: -9, near: 1, far: 40 });
+  key.shadow.mapSize.set(o.mapSize ?? 2048, o.mapSize ?? 2048);
+  Object.assign(key.shadow.camera, { left: -ext, right: ext, top: ext, bottom: -ext, near: 1, far: 40 });
   key.shadow.radius = 6;
   key.shadow.bias = -0.0005;
   scene.add(key);
@@ -54,12 +76,12 @@ export function createRobot(canvas, opts = {}) {
   warmRim.position.set(-2, 3, 4);
   scene.add(warmRim);
   scene.add(new THREE.HemisphereLight(0xffffff, 0x222222, 0.35));
+  return { key, rim, warmRim, pmrem };
+}
 
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: 0.28 }));
-  ground.rotation.x = -Math.PI / 2;
-  ground.receiveShadow = true;
-  scene.add(ground);
-
+// Construit le robot complet. Renvoie le groupe racine, les articulations, les ancres
+// et les fonctions d'éclatement / mise en valeur d'un axe. Une instance par scène.
+export function buildRobotModel() {
   // Matériaux de base (clonés par axe pour le mode fantôme)
   const BASE = {
     steel: new THREE.MeshPhysicalMaterial({ color: 0xcfd2d6, metalness: 1, roughness: 0.26 }),
@@ -93,6 +115,7 @@ export function createRobot(canvas, opts = {}) {
     if (opts.rot) m.rotation.set(...opts.rot);
     m.castShadow = true;
     m.receiveShadow = true;
+    m.userData.axis = axis;
     const edgeGeom = geom.userData.edge;
     if (edgeGeom && !opts.noEdge) m.add(new THREE.LineSegments(edgeGeom, axisEdgeMat[axis]));
     parent.add(m);
@@ -157,7 +180,6 @@ export function createRobot(canvas, opts = {}) {
 
   // ---------- Construction (1 unité = 100 mm) ----------
   const root = new THREE.Group();
-  scene.add(root);
 
   // Axe 0 : bâti
   part(root, rbox(1.25, 0.07, 1.25, 0.02), 'steel', 0, [0, 0.035, 0], [0, -0.4, 0]);
@@ -242,14 +264,56 @@ export function createRobot(canvas, opts = {}) {
   const pince = group(j4, [0.95, 0, 0], 4, [1.3, 0, 0], 0.4);
   part(pince, rbox(0.55, 0.16, 0.34, 0.04), 'pla', 4, [0, 0, 0], [0, 0.25, 0]);
   bolts(pince, 4, [[-0.15, 0.1], [0.15, 0.1], [-0.15, -0.1], [0.15, -0.1]], 0.1, [0, 0.5, 0], 0.028);
-  part(pince, rbox(3.0, 0.03, 0.34, 0.012), 'wood', 4, [1.65, 0, 0], [1.6, 0, 0]);
+  const spatula = part(pince, rbox(3.0, 0.03, 0.34, 0.012), 'wood', 4, [1.65, 0, 0], [1.6, 0, 0]);
   const roz = group(pince, [-0.1, 0, 0.2], 4, [0, 0, 1.4], 0.5);
   part(roz, cyl(0.03, 1.0, 16), 'wood', 4, [0, 0, 0.5], [0, 0, 0], { rot: [Math.PI / 2, 0, 0] });
   part(roz, rbox(0.7, 0.05, 0.05, 0.02), 'wood', 4, [0, 0, 1.0], [0, 0, 0.4]);
 
+  void arm; void carriage;
   const anchors = [null, anchor1, anchor2, anchor3, anchor4];
   const joints = { j1, j2, j3, j4 };
-  void arm; void carriage;
+  const meshes = [];
+  root.traverse((o) => { if (o.isMesh) meshes.push(o); });
+
+  // axe 0 = bâti, 1..4 = axes. opacity : opacité des pièces ; edgeOpacity / edgeAccent : arêtes
+  function setAxisLook(axis, opacity, edgeOpacity, edgeAccent) {
+    for (const m of Object.values(axisMats[axis])) {
+      const tr = opacity < 0.995;
+      if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; }
+      m.opacity = opacity;
+      m.depthWrite = opacity > 0.5;
+    }
+    const em = axisEdgeMat[axis];
+    em.opacity = edgeOpacity;
+    em.color.copy(WHITE).lerp(ACCENT, edgeAccent);
+  }
+  // e : 0 (assemblé) à 1 (éclaté)
+  function setExplode(e) {
+    for (const pt of parts) {
+      const k = ss(pt.delay * 0.4, 0.6 + pt.delay * 0.4, e);
+      pt.obj.position.copy(pt.base).addScaledVector(pt.vec, k);
+    }
+  }
+
+  return { root, parts, meshes, joints, anchors, spatula, setAxisLook, setExplode };
+}
+
+// ---------- Version hero / décomposition (pilotée par le scroll) ----------
+export function createRobot(canvas, opts = {}) {
+  const renderer = makeRenderer(canvas, opts);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 200);
+  setupStudio(renderer, scene);
+
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: 0.28 }));
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  const model = buildRobotModel();
+  scene.add(model.root);
+  const { parts, joints, anchors, setAxisLook } = model;
+  const { j1, j2, j3, j4 } = joints;
 
   // ---------- Caméra : images clés ----------
   const tmp = new THREE.Vector3();
@@ -283,9 +347,79 @@ export function createRobot(canvas, opts = {}) {
   const cam = { t: new THREE.Vector3(3.0, 3.1, 0), R: 23, th: 0.32, ph: 1.3 };
   const ptr = { x: 0, y: 0, sx: 0, sy: 0 };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(pointer: fine)').matches;
   let explodeCur = 0, flipPhase = 0;
   const focusCur = [0, 0, 0, 0, 0];
-  window.addEventListener('pointermove', (e) => { ptr.x = (e.clientX / innerWidth) * 2 - 1; ptr.y = (e.clientY / innerHeight) * 2 - 1; }, { passive: true });
+  // suit le curseur de façon subtile, sans le toucher en tactile
+  window.addEventListener('pointermove', (e) => {
+    if (e.pointerType === 'touch') return;
+    ptr.x = (e.clientX / innerWidth) * 2 - 1;
+    ptr.y = (e.clientY / innerHeight) * 2 - 1;
+  }, { passive: true });
+
+  // ---------- Rotation au glisser (hero et décomposition, souris et stylet seulement) ----------
+  // Décalage orbital ajouté à l'angle du scroll : inertie, puis retour doux au cadrage après 1,5 s.
+  const drag = { on: false, id: -1, x: 0, y: 0, t: 0, moved: false, th: 0, ph: 0, vth: 0, vph: 0, relMs: -1e9, lastMove: 0, homing: false };
+  const ZONE = '#hero, #decomposition';
+  const BLOCK = 'a, button, input, textarea, select, label, summary, .callout, .nav, .explode__rail, [data-magnetic], [data-lenis-prevent], [contenteditable]';
+  const root = document.documentElement;
+  let hint = null, hintTimer = 0;
+  function hideHint() {
+    if (!hint) return;
+    hint.classList.remove('is-in');
+    hint.classList.add('is-out');
+    clearTimeout(hintTimer);
+  }
+  function endDrag() {
+    if (!drag.on) return;
+    drag.on = false;
+    drag.relMs = performance.now();
+    drag.homing = false;
+    root.classList.remove('rb-dragging');
+    if (reduce) { drag.vth = 0; drag.vph = 0; }
+  }
+  window.addEventListener('pointerdown', (e) => {
+    if (!visible || e.pointerType === 'touch' || e.button !== 0 || !e.isPrimary) return;
+    const t = e.target;
+    if (!(t instanceof Element) || !t.closest(ZONE) || t.closest(BLOCK)) return;
+    Object.assign(drag, { on: true, id: e.pointerId, x: e.clientX, y: e.clientY, t: e.timeStamp, moved: false, vth: 0, vph: 0, homing: false, lastMove: performance.now() });
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!drag.on || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.moved) {
+      if (Math.abs(dx) + Math.abs(dy) < 4) return;
+      drag.moved = true;
+      root.classList.add('rb-dragging');
+      hideHint();
+      const sel = getSelection && getSelection();
+      if (sel) sel.removeAllRanges();
+    }
+    const dt = Math.max(1, e.timeStamp - drag.t) / 1000;
+    const dth = -dx * 0.0062, dph = -dy * 0.0042;
+    drag.th += dth;
+    drag.ph = clamp(drag.ph + dph, -0.5, 0.42);
+    drag.vth = clamp(lerp(drag.vth, dth / dt, 0.45), -3.5, 3.5);
+    drag.vph = clamp(lerp(drag.vph, dph / dt, 0.45), -2, 2);
+    drag.x = e.clientX; drag.y = e.clientY; drag.t = e.timeStamp;
+    drag.lastMove = performance.now();
+  }, { passive: true });
+  window.addEventListener('pointerup', (e) => { if (e.pointerId === drag.id) endDrag(); });
+  window.addEventListener('pointercancel', (e) => { if (e.pointerId === drag.id) endDrag(); });
+  window.addEventListener('blur', endDrag);
+  document.addEventListener('selectstart', (e) => { if (drag.on && drag.moved) e.preventDefault(); });
+
+  // petit indice discret, seulement avec un pointeur précis
+  const heroEl = document.getElementById('hero');
+  if (heroEl && finePointer) {
+    hint = document.createElement('div');
+    hint.className = 'rb-hint mono';
+    hint.setAttribute('aria-hidden', 'true');
+    hint.innerHTML = '<span class="rb-hint__icon"><i></i></span><span>Glissez pour tourner</span>';
+    heroEl.appendChild(hint);
+    setTimeout(() => { if (!hint.classList.contains('is-out')) hint.classList.add('is-in'); }, 3200);
+    hintTimer = setTimeout(hideHint, 16000);
+  }
 
   function resize() {
     W = canvas.clientWidth || innerWidth;
@@ -296,18 +430,6 @@ export function createRobot(canvas, opts = {}) {
     camera.updateProjectionMatrix();
   }
   window.addEventListener('resize', resize);
-
-  function setAxisLook(axis, opacity, edgeOpacity, edgeAccent) {
-    for (const m of Object.values(axisMats[axis])) {
-      const tr = opacity < 0.995;
-      if (m.transparent !== tr) { m.transparent = tr; m.needsUpdate = true; }
-      m.opacity = opacity;
-      m.depthWrite = opacity > 0.5;
-    }
-    const em = axisEdgeMat[axis];
-    em.opacity = edgeOpacity;
-    em.color.copy(WHITE).lerp(ACCENT, edgeAccent);
-  }
 
   function tick(now) {
     const dt = Math.min(0.05, (now - last) / 1000);
@@ -340,15 +462,12 @@ export function createRobot(canvas, opts = {}) {
     j1.rotation.y += (target.j1 - j1.rotation.y) * k;
     j2.rotation.y += (target.j2 - j2.rotation.y) * k;
     j3.position.y += (target.j3 - j3.position.y) * k;
-    j4.rotation.x = f[4] > 0.01 ? lerp(j4.rotation.x, target.j4, k) : lerp(j4.rotation.x, target.j4, k);
+    j4.rotation.x = lerp(j4.rotation.x, target.j4, k);
 
     // Éclatement
     const E = ss(PHASES.explode[0], PHASES.explode[1] - 0.02, prog) * (1 - ss(PHASES.assemble[0], PHASES.assemble[1] - 0.01, prog));
     explodeCur += (E - explodeCur) * k;
-    for (const pt of parts) {
-      const e = ss(pt.delay * 0.4, 0.6 + pt.delay * 0.4, explodeCur);
-      pt.obj.position.copy(pt.base).addScaledVector(pt.vec, e);
-    }
+    model.setExplode(explodeCur);
 
     // Fantôme et arêtes
     let F = 0;
@@ -358,6 +477,25 @@ export function createRobot(canvas, opts = {}) {
       const on = n ? focusCur[n] : 0;
       const op = lerp(1, 0.1, F * (1 - on));
       setAxisLook(n, op, lerp(edgeBase * (1 - F * 0.8), 0.95, on), on);
+    }
+
+    // Décalage orbital du glisser : inertie, puis retour au cadrage du scroll après 1,5 s
+    const nowMs = performance.now();
+    if (drag.on) {
+      if (nowMs - drag.lastMove > 70) { drag.vth = 0; drag.vph = 0; }
+    } else {
+      if (!reduce) {
+        drag.th += drag.vth * dt;
+        drag.ph = clamp(drag.ph + drag.vph * dt, -0.5, 0.42);
+        const dec = Math.exp(-dt * 3.6);
+        drag.vth *= dec; drag.vph *= dec;
+      }
+      if (nowMs - drag.relMs > 1500 && (Math.abs(drag.th) > 1e-4 || Math.abs(drag.ph) > 1e-4)) {
+        if (!drag.homing) { drag.homing = true; drag.th = wrapPI(drag.th); drag.vth = 0; drag.vph = 0; }
+        const kk = 1 - Math.exp(-dt * (reduce ? 8 : 1.7));
+        drag.th -= drag.th * kk;
+        drag.ph -= drag.ph * kk;
+      }
     }
 
     // Caméra
@@ -371,8 +509,8 @@ export function createRobot(canvas, opts = {}) {
     const portrait = W / H < 1;
     const R = cam.R * (portrait ? 1.75 : 1);
     const idle = reduce ? 0 : (1 - hero) * 0.18 * Math.sin(time * 0.18);
-    const th = cam.th + idle + ptr.sx * 0.12;
-    const ph = clamp(cam.ph + ptr.sy * 0.05, 0.6, 1.5);
+    const th = cam.th + idle + ptr.sx * 0.14 + drag.th;
+    const ph = clamp(cam.ph + ptr.sy * 0.07 + drag.ph, 0.55, 1.52);
     camera.position.set(
       cam.t.x + R * Math.sin(ph) * Math.sin(th),
       cam.t.y + R * Math.cos(ph),
@@ -392,7 +530,7 @@ export function createRobot(canvas, opts = {}) {
   resize();
   renderer.setAnimationLoop(tick);
 
-  return {
+  const api = {
     ready,
     setHero(h) { hero = clamp(+h || 0); },
     setProgress(p) { prog = clamp(+p || 0); },
@@ -410,9 +548,13 @@ export function createRobot(canvas, opts = {}) {
       if (v === visible) return;
       visible = v;
       last = performance.now();
+      if (!v) endDrag();
       renderer.setAnimationLoop(v ? tick : null);
     },
     resize,
     joints,
+    // lecture seule, utile pour les tests : décalage orbital du glisser
+    get drag() { return { th: drag.th, ph: drag.ph, on: drag.on }; },
   };
+  return api;
 }

@@ -1,0 +1,116 @@
+/* Robot CRÊPE · poste de pilotage (#pilotage) et indice de rotation du hero · playground.css */
+
+/* ---------- Indice « Glissez pour tourner » (hero, créé par robot.js) ---------- */
+html.rb-dragging,html.rb-dragging *{user-select:none !important;-webkit-user-select:none !important}
+.rb-hint{position:absolute;z-index:3;right:calc(var(--pad) + 13rem);bottom:clamp(1.5rem,3vw,2.5rem);display:flex;align-items:center;gap:.75rem;
+  font:500 .68rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted);pointer-events:none;
+  opacity:0;transform:translateY(8px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.rb-hint.is-in{opacity:1;transform:none}
+.rb-hint.is-out{opacity:0;transform:translateY(-6px);transition-duration:.5s}
+.rb-hint__icon{position:relative;width:2.4rem;height:1.1rem;display:block}
+.rb-hint__icon::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--rule-strong)}
+.rb-hint__icon i{position:absolute;top:50%;left:0;width:.5rem;height:.5rem;margin-top:-.25rem;border-radius:50%;background:var(--accent);animation:rb-swipe 2.6s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes rb-swipe{0%{transform:translateX(0);opacity:0}15%{opacity:1}75%{opacity:1}100%{transform:translateX(1.9rem);opacity:0}}
+@media (hover:none),(pointer:coarse),(max-width:900px){.rb-hint{display:none}}
+@media (prefers-reduced-motion:reduce){.rb-hint__icon i{animation:none;transform:translateX(.9rem)}}
+
+/* ---------- Poste de pilotage ---------- */
+.play{overflow:clip}
+.play-root{position:relative;max-width:calc(var(--maxw) - 2*var(--pad));margin:clamp(2rem,4vw,3.5rem) auto 0;min-height:clamp(520px,75vh,860px)}
+.play-stage{position:relative;border:1px solid var(--rule);border-radius:16px;overflow:hidden;background:radial-gradient(120% 90% at 38% 55%,#1b1c20 0%,#111113 55%,#0b0b0c 100%);isolation:isolate}
+.play-view{position:relative;height:clamp(520px,75vh,860px);overflow:hidden}
+.play-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+.play-canvas:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.play-view::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px rgba(0,0,0,.45)}
+
+/* étiquette flottante au survol d'une pièce */
+.play-tip{position:absolute;z-index:4;left:0;top:0;pointer-events:none;opacity:0;white-space:nowrap;transition:opacity .18s ease;
+  font:500 .68rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-light);
+  padding:.55rem .75rem;border-radius:999px;background:rgba(11,11,12,.82);border:1px solid rgba(227,168,87,.55);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.play-tip.is-on{opacity:1}
+.play-tip b{font-weight:500;color:var(--accent)}
+
+/* indices d'usage */
+.play-hint{position:absolute;z-index:3;left:1.25rem;top:1.1rem;display:flex;flex-wrap:wrap;gap:.35rem .9rem;align-items:center;margin:0;
+  font:500 .66rem/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted);pointer-events:none;max-width:calc(100% - 22rem)}
+.play-hint i{width:1px;height:.8em;background:var(--rule-strong)}
+.play-state{position:absolute;z-index:3;left:1.25rem;top:3.1rem;display:flex;align-items:center;gap:.55rem;margin:0;
+  font:500 .66rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-soft);pointer-events:none}
+.play-state::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(227,168,87,.18)}
+.play-stage[data-mode="manual"] .play-state::before{background:#9fb8ff;box-shadow:0 0 0 4px rgba(159,184,255,.18)}
+.play-stage[data-mode="seq"] .play-state::before{animation:play-pulse 1s ease-in-out infinite}
+@keyframes play-pulse{50%{box-shadow:0 0 0 8px rgba(227,168,87,0)}}
+
+/* télémétrie : écran d'ingénieur */
+.play-telemetry{position:absolute;z-index:3;left:1.25rem;bottom:1.1rem;right:calc(var(--panel-w,20rem) + 2.5rem);margin:0;padding:.75rem 0 0;list-style:none;
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.25rem 1rem;border-top:1px solid var(--rule-strong);
+  font-family:var(--mono);pointer-events:none;background:linear-gradient(to top,rgba(11,11,12,.55),transparent)}
+.play-telemetry li{display:flex;flex-direction:column;gap:.35rem;min-width:0}
+.play-telemetry span{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-muted)}
+.play-telemetry b{font-weight:500;font-size:clamp(.78rem,.9vw,.95rem);letter-spacing:.02em;color:var(--text-light);font-variant-numeric:tabular-nums;white-space:nowrap}
+.play-telemetry li[data-t="etat"] b{color:var(--accent)}
+
+/* panneau de commande : verre dépoli sobre */
+.play-panel{position:absolute;z-index:5;top:1rem;right:1rem;bottom:1rem;width:var(--panel-w,20rem);display:flex;flex-direction:column;gap:1.15rem;padding:1.15rem 1.15rem 1.25rem;overflow:auto;
+  border-radius:12px;background:rgba(18,18,21,.52);border:1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(20px) saturate(1.25);backdrop-filter:blur(20px) saturate(1.25);
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+.play-panel__head{display:flex;justify-content:space-between;align-items:center;gap:.75rem;padding-bottom:.9rem;border-bottom:1px solid var(--rule)}
+.play-panel__title{white-space:nowrap;font:500 .66rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-soft)}
+.play-chip{font:500 .62rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);padding:.38rem .55rem;border:1px solid rgba(227,168,87,.4);border-radius:999px;white-space:nowrap}
+.play-stage[data-mode="manual"] .play-chip{color:#b9ccff;border-color:rgba(159,184,255,.45)}
+
+.play-axes{display:flex;flex-direction:column;gap:1.05rem}
+.play-axis{display:flex;flex-direction:column;gap:.5rem;padding:.1rem .15rem;border-radius:8px;transition:background .25s ease}
+.play-axis.is-hot .play-axis__id{color:var(--ink);background:var(--accent);border-color:var(--accent)}
+.play-axis__head{display:flex;align-items:center;gap:.6rem}
+.play-axis__id{font:500 .62rem/1 var(--mono);letter-spacing:.1em;padding:.28rem .4rem;border:1px solid var(--rule-strong);border-radius:4px;color:var(--fg-soft);transition:all .25s ease;cursor:pointer;background:none}
+.play-axis__id:focus-visible,.play-btn:focus-visible,.play-axis input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.play-axis__name{flex:1;min-width:0;font-size:.82rem;line-height:1.2;color:var(--text-light)}
+.play-axis__name small{display:block;margin-top:.2rem;font:500 .6rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--fg-muted)}
+.play-axis output{text-transform:none;font:500 .8rem/1 var(--mono);color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap}
+.play-axis input[type=range]{--p:50%;-webkit-appearance:none;appearance:none;width:100%;height:22px;margin:0;background:transparent;cursor:pointer;touch-action:pan-y}
+.play-axis input[type=range]::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--p),rgba(255,255,255,.2) var(--p))}
+.play-axis input[type=range]::-moz-range-track{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--p),rgba(255,255,255,.2) var(--p))}
+.play-axis input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-7px;border-radius:50%;background:var(--accent);border:3px solid #17171a;box-shadow:0 0 0 1px var(--accent)}
+.play-axis input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);border:3px solid #17171a;box-shadow:0 0 0 1px var(--accent)}
+.play-axis input[type=range]:disabled{opacity:.45;cursor:default}
+.play-axis__scale{display:flex;justify-content:space-between;font:500 .58rem/1 var(--mono);letter-spacing:.08em;color:var(--fg-muted)}
+
+.play-actions{display:flex;flex-direction:column;gap:.55rem;margin-top:auto}
+.play-actions__row{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.play-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:2.6rem;padding:.6rem .9rem;border:1px solid rgba(255,255,255,.2);border-radius:999px;
+  font:500 .66rem/1.1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-align:center;color:var(--text-light);background:rgba(255,255,255,.03);
+  transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s cubic-bezier(.16,1,.3,1)}
+.play-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.play-btn:active:not(:disabled){transform:scale(.98)}
+.play-btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.play-btn:disabled{opacity:.42;cursor:default}
+.play-btn--main{min-height:2.9rem}
+
+.play-fallback{display:grid;place-items:center;min-height:clamp(320px,50vh,520px);padding:2rem;text-align:center;color:var(--fg-soft)}
+
+/* ---------- Mobile et tablette : le panneau passe sous le canvas ---------- */
+@media (max-width:899px){
+  .play-root{min-height:calc(clamp(380px,60svh,560px) + 31rem)}
+  .play-view{height:clamp(380px,60svh,560px)}
+  .play-hint{max-width:calc(100% - 2rem);top:.9rem;left:1rem;font-size:.6rem}
+  .play-state{display:none}
+  .play-hint__wheel{display:none}
+  .play-telemetry{left:1rem;right:1rem;bottom:.8rem;grid-template-columns:repeat(4,minmax(0,1fr));gap:.55rem .6rem;padding-top:.6rem}
+  .play-telemetry b{font-size:.76rem}
+  .play-panel{position:relative;inset:auto;width:auto;margin:0;border-radius:0;border:0;border-top:1px solid rgba(255,255,255,.12);
+    background:rgba(18,18,21,.7);overflow:visible;padding:1.15rem 1rem 1.4rem}
+  .play-axis input[type=range]{height:30px}
+  .play-axis input[type=range]::-webkit-slider-thumb{width:22px;height:22px;margin-top:-10px}
+  .play-axis input[type=range]::-moz-range-thumb{width:16px;height:16px}
+}
+@media (max-width:420px){
+  .play-telemetry li[data-t="etat"]{display:none}
+  .play-telemetry{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){
+  .play-stage[data-mode="seq"] .play-state::before{animation:none}
+  .play-tip,.play-axis,.play-btn,.play-axis__id{transition:none}
+}
